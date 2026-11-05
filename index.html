@@ -190,9 +190,12 @@ h3{font-weight:800;font-stretch:85%;font-size:1.2rem;line-height:1.2}
 .conseq span{border:1.5px solid var(--line);border-radius:999px;padding:5px 13px;font-size:.92rem}
 
 /* 7. voces */
-.voices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 28px;border-top:2px solid var(--ink)}
-@media (max-width:580px){.voices{grid-template-columns:1fr}}
-.voice{padding:16px 0;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:6px;min-width:0}
+.voices{display:flex;flex-direction:column;border-top:2px solid var(--ink)}
+.voice{padding:18px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:190px minmax(0,1fr);gap:4px 24px;align-items:baseline;min-width:0}
+.voice h3,.voice .yrs{grid-column:1}
+.voice > p{grid-column:2;grid-row:1 / span 2}
+.voice > p.here{grid-row:3}
+@media (max-width:580px){.voice{display:flex;flex-direction:column;gap:6px}}
 .voice h3{font-size:1.25rem}
 .voice .yrs{font-size:.82rem;color:var(--muted)}
 .voice .here{font-size:.95rem;color:var(--pink)}
