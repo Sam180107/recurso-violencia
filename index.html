@@ -20,7 +20,7 @@
    texto a la izquierda y visual a la derecha en todas las divisiones. Sin animaciones al hacer scroll. */
 :root{
   --red-a:#C8281E; --red-b:#B5221A; --dark:#1D1B18;
-  --ink:#FFF6F0; --ink-2:#FFE6DE; --muted:#FFD3C8; --line:rgba(255,246,240,.26);
+  --ink:#FFF6F0; --ink-2:#FFEAE2; --muted:#FFE4DA; --line:rgba(255,246,240,.26);
   --surface:rgba(255,255,255,.10); --surface-2:rgba(255,255,255,.18);
   --accent:#FFE08A; --accent-hl:rgba(255,224,138,.35);
   --hope:#FFC48A; --hope-fill:#FFB15C; --hope-soft:rgba(255,177,92,.22);
@@ -67,11 +67,11 @@ button{font:inherit;color:inherit;cursor:pointer}
 
 /* botones: un par */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--s-2);min-height:44px;border:0;border-radius:var(--r-btn);padding:0 var(--s-5);
-  background:var(--ink);color:var(--red-a);font-family:var(--body);font-weight:500;font-size:1rem;line-height:1.2;text-decoration:none;white-space:nowrap;
+  background:var(--ink);color:var(--sec,var(--red-a));font-family:var(--body);font-weight:500;font-size:1rem;line-height:1.2;text-decoration:none;white-space:nowrap;
   transition:transform var(--m-out) var(--m-ease),background-color var(--m-out) ease,box-shadow var(--m-out) ease;-webkit-tap-highlight-color:transparent}
 .btn--secondary{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
 @media (hover:hover) and (pointer:fine){
-  .btn:hover{transform:translateY(-1px);background:color-mix(in oklab, var(--ink) 86%, var(--red-a));transition-duration:var(--m-in)}
+  .btn:hover{transform:translateY(-1px);background:color-mix(in oklab, var(--ink) 86%, var(--sec,var(--red-a)));transition-duration:var(--m-in)}
   .btn--secondary:hover{background:color-mix(in oklab, var(--ink) 10%, transparent)}
 }
 .btn:active{transform:translateY(1px) scale(.985);transition-duration:var(--m-press)}
@@ -101,7 +101,12 @@ button{font:inherit;color:inherit;cursor:pointer}
 
 /* secciones: una por pantalla en escritorio */
 main > section,footer.closing{position:relative;padding:var(--padt) 0 var(--padb)}
-main > section:nth-of-type(even){background:var(--red-b)}
+/* cada sección con su propio tono cálido: rojo, naranja quemado, vino, óxido, granate, ámbar */
+main > section{--sec:var(--bg,var(--red-a));background:var(--sec)}
+#chat{--bg:#C8281E} #agresividad{--bg:#B0400E} #galtung{--bg:#9E1B32} #formas{--bg:#AB450E} #juego{--bg:#8A2410}
+#ciclo{--bg:#B32E1E} #causas{--bg:#76181F} #voces{--bg:#A3460B} #ayuda{--bg:#AD4C0A} #semaforo{--bg:#9C3412}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) main > section{--sec:color-mix(in oklab, var(--bg) 74%, #000)}}
+:root[data-theme="dark"] main > section{--sec:color-mix(in oklab, var(--bg) 74%, #000)}
 @media (min-width:1024px) and (min-height:700px){
   main > section,footer.closing{min-height:calc(var(--h,1) * 100svh)}
 }
@@ -186,9 +191,9 @@ h1 .edited{font-family:var(--body);font-size:var(--t-label);font-weight:500;colo
 @media (max-width:639px){.visual{padding:var(--s-4);min-height:0}}
 .visual svg{width:100%;max-width:380px;height:auto;display:block}
 .vx{cursor:pointer}
-.vx circle{fill:var(--red-a);stroke:var(--ink);stroke-width:1.5;transition:fill var(--m-out) ease,stroke var(--m-out) ease}
+.vx circle{fill:var(--sec);stroke:var(--ink);stroke-width:1.5;transition:fill var(--m-out) ease,stroke var(--m-out) ease}
 .vx text{fill:var(--ink);font-family:var(--body);font-weight:500;font-size:14px;pointer-events:none}
-@media (hover:hover) and (pointer:fine){.vx:not(.on):hover circle{fill:color-mix(in oklab, var(--red-a) 80%, #fff)}}
+@media (hover:hover) and (pointer:fine){.vx:not(.on):hover circle{fill:color-mix(in oklab, var(--sec) 80%, #fff)}}
 .vx.on circle{fill:var(--accent);stroke:var(--accent)}
 .vx.on text{fill:#1D1B18}
 .tri-edge{fill:none;stroke:var(--line);stroke-width:2}
@@ -204,9 +209,9 @@ h1 .edited{font-family:var(--body);font-size:var(--t-label);font-weight:500;colo
   transition:transform var(--m-out) var(--m-ease),background-color var(--m-out) ease,border-color var(--m-out) ease,color var(--m-out) ease}
 @media (hover:hover) and (pointer:fine){.chip:hover:not([aria-pressed="true"]){border-color:var(--ink);transform:translateY(-1px);transition-duration:var(--m-in)}}
 .chip:active{transform:translateY(1px) scale(.985);transition-duration:var(--m-press)}
-.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--red-a)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--sec)}
 
-.ring{cursor:pointer;stroke:var(--red-a);stroke-width:3;fill:#1D1B18;transition:opacity var(--m-out) ease}
+.ring{cursor:pointer;stroke:var(--sec);stroke-width:3;fill:#1D1B18;transition:opacity var(--m-out) ease}
 .ring.r0{opacity:.12}.ring.r1{opacity:.22}.ring.r2{opacity:.34}.ring.r3{opacity:.5}
 .ring.on{opacity:.88}
 .ring-lbl{fill:var(--ink);font-family:var(--body);font-weight:500;font-size:13px;pointer-events:none}
