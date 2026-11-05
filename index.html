@@ -9,272 +9,286 @@
 <meta property="og:description" content="Lee el chat de Dani y descubre cuántas señales de violencia se te pasaron.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Hanken+Grotesk:wght@400;500&display=swap">
 <style>
 /* Concepto: la página se lee como una conversación de madrugada que alguien revisó con resaltador.
-   Una columna alineada a la izquierda (~660px). Lo único llamativo es el título, que se "edita" como un mensaje. */
+   Sistema único (taste skill): tinta casi negra cálida, un solo acento rojo para las señales de violencia,
+   naranja solo en la parte final (esperanza), titulares en Newsreader 400 y texto en Hanken Grotesk.
+   Escala de espacios 4/8/12/16/24/32/48/64/96 y radios 8/12/20. */
 :root{
-  --paper:#F5F6F8; --surface:#FFFFFF; --ink:#1B1B3A; --muted:#5C5C78; --line:#DADBE6;
-  --pink:#D42A20; --pink-hl:rgba(255,72,56,.24); --pink-soft:#FDE6E3;
-  --hope:#C2540A; --hope-fill:#F47A1F; --hope-soft:#FFE9D6;
-  --warn:#A86A12; --ok:#2E7D5B; --off:#B9B5CC;
-  --bubble-them:#E7E8F0; --bubble-me:#1B1B3A; --bubble-me-ink:#F5F6F8;
-  --display:"Big Shoulders Display", "Arial Narrow", "Roboto Condensed", system-ui, sans-serif;
-  --ease-out:cubic-bezier(0.23, 1, 0.32, 1); --ease-in-out:cubic-bezier(0.77, 0, 0.175, 1);
-  --body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --paper:#F7F5F2; --surface:#FFFFFF; --ink:#1D1B18; --ink-2:#3D3934; --muted:#6A645C; --line:#DFDBD5;
+  --accent:#C8281E; --accent-hl:rgba(234,64,48,.22); --accent-soft:#FBE7E3;
+  --hope:#B14C08; --hope-fill:#F47A1F; --hope-soft:#FFEBDA;
+  --warn:#B07114; --ok:#2C7A57; --off:#B5AFA6;
+  --bubble-them:#ECE9E4; --bubble-me:#1D1B18; --bubble-me-ink:#F7F5F2;
+  --display:"Newsreader", Georgia, "Times New Roman", serif;
+  --body:"Hanken Grotesk", "Segoe UI", system-ui, sans-serif;
+  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:24px; --s-6:32px; --s-7:48px; --s-8:64px; --s-9:96px;
+  --r-sm:8px; --r-md:12px; --r-lg:20px;
+  --m-in:140ms; --m-out:200ms; --m-press:90ms; --m-ease:cubic-bezier(.2,.8,.2,1);
   color-scheme:light;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --paper:#121228; --surface:#1B1B36; --ink:#EDEDF7; --muted:#A3A3C0; --line:#2D2D4D;
-  --pink:#FF5A4F; --pink-hl:rgba(255,90,79,.30); --pink-soft:#3A1C22;
-  --hope:#FF9A4D; --hope-fill:#FF8A33; --hope-soft:#3A2414;
-  --warn:#E8A93F; --ok:#5FCB97; --off:#8A84A6;
-  --bubble-them:#26264A; --bubble-me:#EDEDF7; --bubble-me-ink:#121228; color-scheme:dark}}
+  --paper:#161513; --surface:#201E1B; --ink:#F1EEE9; --ink-2:#D6D1CA; --muted:#A49E95; --line:#36322D;
+  --accent:#FF5E52; --accent-hl:rgba(255,94,82,.28); --accent-soft:#3A1D1A;
+  --hope:#FF9A4D; --hope-fill:#FF8A33; --hope-soft:#3A2617;
+  --warn:#E8A93F; --ok:#5FCB97; --off:#7E786F;
+  --bubble-them:#2B2925; --bubble-me:#F1EEE9; --bubble-me-ink:#161513; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --paper:#121228; --surface:#1B1B36; --ink:#EDEDF7; --muted:#A3A3C0; --line:#2D2D4D;
-  --pink:#FF5A4F; --pink-hl:rgba(255,90,79,.30); --pink-soft:#3A1C22;
-  --hope:#FF9A4D; --hope-fill:#FF8A33; --hope-soft:#3A2414;
-  --warn:#E8A93F; --ok:#5FCB97; --off:#8A84A6;
-  --bubble-them:#26264A; --bubble-me:#EDEDF7; --bubble-me-ink:#121228; color-scheme:dark}
+  --paper:#161513; --surface:#201E1B; --ink:#F1EEE9; --ink-2:#D6D1CA; --muted:#A49E95; --line:#36322D;
+  --accent:#FF5E52; --accent-hl:rgba(255,94,82,.28); --accent-soft:#3A1D1A;
+  --hope:#FF9A4D; --hope-fill:#FF8A33; --hope-soft:#3A2617;
+  --warn:#E8A93F; --ok:#5FCB97; --off:#7E786F;
+  --bubble-them:#2B2925; --bubble-me:#F1EEE9; --bubble-me-ink:#161513; color-scheme:dark}
 
 *{box-sizing:border-box}
 html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
   padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
 img{max-width:100%}
 [hidden]{display:none!important}
-h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}
-p{margin:0}
-a{color:var(--pink)}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;font-optical-sizing:auto}
+p{margin:0;text-wrap:pretty}
+a{color:var(--ink);text-decoration-color:var(--line);text-underline-offset:3px;transition:text-decoration-color var(--m-out) ease}
+@media (hover:hover) and (pointer:fine){a:hover{text-decoration-color:var(--ink);transition-duration:var(--m-in)}}
 button{font:inherit;color:inherit;cursor:pointer}
-:focus-visible{outline:3px solid var(--pink);outline-offset:3px;border-radius:4px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px;animation:ring 200ms var(--m-ease)}
+@keyframes ring{from{outline-offset:6px}}
 
-.wrap{max-width:660px;margin:0 auto;padding-block:20px 72px;display:flex;flex-direction:column;gap:88px}
-.small{font-size:.88rem}
-.muted{color:var(--muted)}
+.wrap{max-width:660px;margin:0 auto;padding-block:var(--s-6) var(--s-8);display:flex;flex-direction:column;gap:var(--s-9)}
+@media (max-width:640px){.wrap{gap:var(--s-8);padding-top:var(--s-5)}}
+.chap > p,.lead,.reveal p,.aside{max-width:34em}
+.aside{font-size:1rem;color:var(--ink-2)}
+.label{font-size:.875rem;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums}
 
-.btn{border:0;border-radius:999px;padding:12px 22px;background:var(--ink);color:var(--paper);font-family:var(--display);font-weight:700;font-size:1rem}
-.btn,.opt,.pledge,.seg button,.legend button{transition:transform 160ms var(--ease-out),background-color 160ms ease,border-color 160ms ease,color 160ms ease;-webkit-tap-highlight-color:transparent}
-.btn:active,.opt:active:not([disabled]),.pledge:active,.seg button:active{transform:scale(.97)}
-.btn.line{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink)}
-.btn.hot{background:var(--pink);color:#fff}
-
-/* barra de avance */
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
-.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);
-  margin-inline:calc(-1 * max(16px, env(safe-area-inset-left,0px)));padding:10px max(16px, env(safe-area-inset-left,0px)) 8px}
-.topbar-in{max-width:660px;margin:0 auto;display:flex;flex-direction:column;gap:6px}
-.topbar-label{font-family:var(--display);font-weight:600;font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums}
-.track{height:3px;background:var(--line);border-radius:3px;overflow:hidden}
-.track i{display:block;height:100%;width:0;background:var(--pink)}
+/* botones: un solo par (primario relleno, secundario de contorno) */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;border:0;border-radius:999px;padding:0 var(--s-5);
+  background:var(--ink);color:var(--paper);font-family:var(--body);font-weight:500;font-size:1rem;line-height:1.2;
+  transition:transform var(--m-out) var(--m-ease),background-color var(--m-out) ease,box-shadow var(--m-out) ease;-webkit-tap-highlight-color:transparent}
+.btn.line{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+@media (hover:hover) and (pointer:fine){
+  .btn:hover{transform:translateY(-1px);background:color-mix(in oklab, var(--ink) 86%, var(--paper));transition-duration:var(--m-in)}
+  .btn.line:hover{background:color-mix(in oklab, var(--ink) 6%, transparent)}
+}
+.btn:active{transform:translateY(1px) scale(.985);transition-duration:var(--m-press)}
+.opt,.pledge,.seg button,.legend button{transition:transform var(--m-out) var(--m-ease),background-color var(--m-out) ease,border-color var(--m-out) ease,color var(--m-out) ease;-webkit-tap-highlight-color:transparent}
+.opt:active:not([disabled]),.pledge:active,.seg button:active{transform:translateY(1px) scale(.985);transition-duration:var(--m-press)}
 
 /* hero */
-.hero{display:flex;flex-direction:column;gap:22px;padding-top:12px}
-.kicker{font-size:.92rem;color:var(--muted)}
-h1{font-weight:900;font-size:clamp(4.4rem, 21vw, 9rem);line-height:.84;letter-spacing:-.005em;min-height:1.72em;display:flex;flex-direction:column;justify-content:flex-end}
-h1 .caret{display:inline-block;width:.06em;height:.8em;background:var(--pink);margin-left:.04em;vertical-align:-.04em;opacity:0}
-h1.typing .caret{opacity:1;animation:blink .8s steps(1) infinite}
-h1 .edited{font-family:var(--body);font-size:.95rem;font-weight:400;color:var(--muted);letter-spacing:0;margin-top:10px;}
-@keyframes blink{50%{opacity:0}}
-.lead{font-size:1.15rem;max-width:34em}
+.hero{display:flex;flex-direction:column;gap:var(--s-5)}
+h1{font-size:clamp(3.4rem, 15vw, 6.6rem);line-height:.95;letter-spacing:-.028em;min-height:1.95em;display:flex;flex-direction:column;justify-content:flex-end}
+h1 .caret{display:inline-block;width:.045em;height:.78em;background:var(--accent);margin-left:.05em;vertical-align:-.06em;opacity:0}
+h1.typing .caret{opacity:1}
+h1 .edited{font-family:var(--body);font-size:.875rem;font-weight:500;color:var(--muted);letter-spacing:0;margin-top:var(--s-3)}
+.lead{font-size:1.25rem;line-height:1.5;color:var(--ink-2)}
 
-.phone{background:var(--surface);border:1px solid var(--line);border-radius:30px;max-width:430px;width:100%;overflow:hidden}
-.phone-head{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line)}
-.avatar{width:38px;height:38px;border-radius:50%;background:var(--pink-soft);color:var(--pink);display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:1.1rem}
-.who b{font-family:var(--display);font-size:1.05rem;display:block;line-height:1.2}
-.who span{font-size:.8rem;color:var(--muted)}
-.chat{display:flex;flex-direction:column;gap:6px;padding:16px 14px;min-height:300px}
-.stamp{align-self:center;font-size:.75rem;color:var(--muted);padding:4px 10px;border-radius:999px;background:var(--paper);margin-block:6px}
-.msg{max-width:84%;padding:9px 13px;border-radius:18px;font-size:1rem;line-height:1.38}
-.msg.them{background:var(--bubble-them);align-self:flex-start;border-bottom-left-radius:5px}
-.msg.me{background:var(--bubble-me);color:var(--bubble-me-ink);align-self:flex-end;border-bottom-right-radius:5px}
-.msg.in{animation:pop 240ms var(--ease-out)}
-.msg mark{background:linear-gradient(transparent 12%, var(--pink-hl) 12%, var(--pink-hl) 88%, transparent 88%);color:inherit;padding:0 2px;border-radius:2px}
-.note{display:block;font-family:var(--display);font-weight:800;font-size:.95rem;letter-spacing:.01em;color:var(--pink);margin-top:3px}
+.phone{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);max-width:430px;width:100%;overflow:hidden;box-shadow:0 1px 0 var(--line),0 24px 48px -32px rgba(29,27,24,.25)}
+.phone-head{display:flex;align-items:center;gap:var(--s-3);padding:var(--s-3) var(--s-4);border-bottom:1px solid var(--line)}
+.avatar{width:40px;height:40px;border-radius:50%;background:var(--bubble-them);color:var(--ink);display:grid;place-items:center;font-family:var(--display);font-size:1.25rem}
+.who b{font-weight:500;font-size:1rem;display:block;line-height:1.25}
+.who span{font-size:.8125rem;color:var(--muted)}
+.chat{display:flex;flex-direction:column;gap:6px;padding:var(--s-4) var(--s-3);min-height:300px}
+.stamp{align-self:center;font-size:.8125rem;font-weight:500;color:var(--muted);padding:2px 10px;border-radius:999px;background:var(--paper);margin-block:6px}
+.msg{max-width:84%;padding:9px 13px;border-radius:18px;font-size:1rem;line-height:1.4}
+.msg.them{background:var(--bubble-them);align-self:flex-start;border-bottom-left-radius:6px}
+.msg.me{background:var(--bubble-me);color:var(--bubble-me-ink);align-self:flex-end;border-bottom-right-radius:6px}
+.msg.in{animation:pop 240ms var(--m-ease)}
+.msg mark{background:linear-gradient(transparent 12%, var(--accent-hl) 12%, var(--accent-hl) 88%, transparent 88%);color:inherit;padding:0 2px;border-radius:2px}
+.note{display:block;font-size:.8125rem;font-weight:500;color:var(--accent);margin-top:var(--s-1)}
 .typing-dots{align-self:flex-start;background:var(--bubble-them);border-radius:18px;padding:12px 14px;display:flex;gap:4px}
 .typing-dots i{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:dot 1s infinite}
 .typing-dots i:nth-child(2){animation-delay:.15s}.typing-dots i:nth-child(3){animation-delay:.3s}
 @keyframes dot{0%,60%,100%{opacity:.3}30%{opacity:1}}
-@keyframes pop{from{transform:translateY(8px) scale(.97);opacity:0}to{transform:none;opacity:1}}
+@keyframes pop{from{transform:translateY(6px) scale(.98);opacity:0}to{transform:none;opacity:1}}
 .msg.them.in{transform-origin:left bottom}.msg.me.in{transform-origin:right bottom}
-.phone-foot{display:flex;gap:10px;flex-wrap:wrap;padding:0 14px 16px}
-.reveal{display:flex;flex-direction:column;gap:10px;max-width:34em}
-.reveal .verdict{font-family:var(--display);font-weight:800;font-size:1.5rem;line-height:1.15}
+.phone-foot{display:flex;gap:var(--s-2);flex-wrap:wrap;padding:0 var(--s-3) var(--s-4)}
+@media (max-width:640px){.phone-foot .btn{width:100%}}
+.reveal{display:flex;flex-direction:column;gap:var(--s-3)}
+.reveal .poster{margin:var(--s-2) 0 0;font-family:var(--display);font-style:italic;font-size:clamp(2.6rem, 11vw, 4.6rem);line-height:1;letter-spacing:-.02em;text-wrap:balance}
+.reveal .verdict{font-family:var(--display);font-size:1.75rem;line-height:1.2;letter-spacing:-.01em;margin-top:var(--s-3)}
 
 /* capítulos */
-.chap{display:flex;flex-direction:column;gap:22px}
-.chap-head{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;align-items:baseline}
-.chap-head.solo{grid-template-columns:1fr}
-.fb .tag.ok{color:var(--ok)}
-.chap-num{font-family:var(--display);font-weight:900;font-size:3.2rem;line-height:1;color:var(--muted);font-variant-numeric:tabular-nums;min-width:1.1em}
-h2{font-weight:800;font-size:clamp(2.4rem, 8vw, 3.2rem);line-height:.98;letter-spacing:-.005em}
-h3{font-weight:800;font-size:1.45rem;line-height:1.2}
-.think{align-self:flex-start;max-width:90%;background:var(--pink-soft);border-radius:18px 18px 18px 5px;padding:12px 16px}
-.think b{display:block;font-family:var(--display);font-size:.85rem;color:var(--pink);margin-bottom:2px}
+.chap{display:flex;flex-direction:column;gap:var(--s-5)}
+.chap-head{display:flex;flex-direction:column;gap:var(--s-2);margin-bottom:var(--s-2)}
+.chap-num{font-size:.875rem;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums}
+h2{font-size:clamp(2.1rem, 7vw, 3rem);line-height:1.04;letter-spacing:-.022em}
+h3{font-size:1.5rem;line-height:1.2;letter-spacing:-.01em}
+.think{align-self:flex-start;max-width:34em;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg) var(--r-lg) var(--r-lg) 6px;padding:var(--s-4) var(--s-5)}
+.think b{display:block;font-size:.8125rem;font-weight:500;color:var(--muted);margin-bottom:var(--s-1)}
 
 /* 1. comparación */
-.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border-top:2px solid var(--ink)}
-.split > div{padding:16px 0 0;display:flex;flex-direction:column;gap:8px;min-width:0}
-.split > div:first-child{padding-right:18px;border-right:1px solid var(--line)}
-.split > div:last-child{padding-left:18px}
-.split .term{font-family:var(--display);font-weight:900;font-size:1.9rem;line-height:1}
-.split .term.bad{color:var(--pink)}
-.split ul{margin:0;padding-left:18px;font-size:.95rem}
-@media (max-width:520px){.split{grid-template-columns:1fr}.split > div:first-child{padding-right:0;border-right:0;padding-bottom:18px;border-bottom:1px solid var(--line)}.split > div:last-child{padding-left:0}}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border-top:1px solid var(--ink)}
+.split > div{padding:var(--s-4) 0 0;display:flex;flex-direction:column;gap:var(--s-2);min-width:0}
+.split > div:first-child{padding-right:var(--s-5);border-right:1px solid var(--line)}
+.split > div:last-child{padding-left:var(--s-5)}
+.split .term{font-family:var(--display);font-size:2rem;line-height:1.05;letter-spacing:-.02em}
+.split .term.bad{color:var(--accent)}
+.split p,.split ul{font-size:1rem}
+.split ul{margin:0;padding-left:18px}
+@media (max-width:520px){.split{grid-template-columns:1fr}.split > div:first-child{padding-right:0;border-right:0;padding-bottom:var(--s-5);border-bottom:1px solid var(--line)}.split > div:last-child{padding-left:0}}
 
 /* 2. triángulo */
-.diagram{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:center}
+.diagram{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s-5);align-items:center}
 @media (max-width:580px){.diagram{grid-template-columns:1fr}}
 .diagram svg{width:100%;max-width:330px;height:auto;display:block;margin-inline:auto}
 .vx{cursor:pointer}
-.vx circle{fill:var(--surface);stroke:var(--ink);stroke-width:2.5}
-.vx text{fill:var(--ink);font-family:var(--display);font-weight:800;font-size:15px;pointer-events:none}
-.vx.on circle{fill:var(--pink);stroke:var(--pink)}
+.vx circle{fill:var(--surface);stroke:var(--ink);stroke-width:1.5;transition:fill var(--m-out) ease,stroke var(--m-out) ease}
+.vx text{fill:var(--ink);font-family:var(--body);font-weight:500;font-size:14px;pointer-events:none}
+@media (hover:hover) and (pointer:fine){.vx:not(.on):hover circle{fill:var(--bubble-them)}}
+.vx.on circle{fill:var(--accent);stroke:var(--accent)}
 .vx.on text{fill:#fff}
-.tri-edge{fill:none;stroke:var(--line);stroke-width:3}
-.water{stroke:var(--pink);stroke-width:1.5;stroke-dasharray:5 5}
-.water-lbl{fill:var(--muted);font-family:var(--body);font-size:12px}
-.below{fill:var(--pink-soft);opacity:.55}
-.detail{display:flex;flex-direction:column;gap:8px;min-width:0}
-.detail .ex{border-top:1px solid var(--line);padding-top:10px;font-size:.95rem}
-.detail .ex b{font-family:var(--display);color:var(--pink)}
+.tri-edge{fill:none;stroke:var(--line);stroke-width:2}
+.water{stroke:var(--accent);stroke-width:1;stroke-dasharray:4 4}
+.water-lbl{fill:var(--muted);font-family:var(--body);font-weight:500;font-size:13px}
+.below{fill:var(--bubble-them);opacity:.7}
+.detail{display:flex;flex-direction:column;gap:var(--s-2);min-width:0}
+.detail p{font-size:1rem}
+.detail .ex{border-top:1px solid var(--line);padding-top:var(--s-3)}
+.detail .ex b{font-weight:500}
 
 /* 3. formas */
-.forms{border-top:2px solid var(--ink)}
-.form-row{display:grid;grid-template-columns:130px minmax(0,1fr);gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
-.form-row b{font-family:var(--display);font-weight:800;font-size:1.15rem}
-.form-row.star b{color:var(--pink)}
-@media (max-width:460px){.form-row{grid-template-columns:1fr;gap:2px}}
+.forms{border-top:1px solid var(--ink)}
+.form-row{display:grid;grid-template-columns:140px minmax(0,1fr);gap:var(--s-4);padding:var(--s-4) 0;border-bottom:1px solid var(--line);align-items:baseline}
+.form-row b{font-family:var(--display);font-weight:400;font-size:1.375rem;letter-spacing:-.01em}
+.form-row span{font-size:1rem}
+@media (max-width:460px){.form-row{grid-template-columns:1fr;gap:var(--s-1)}}
 
 /* 4. juego */
-.game{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:22px;display:flex;flex-direction:column;gap:18px}
-.game-top{display:flex;justify-content:space-between;gap:10px;font-size:.88rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.game{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:var(--s-5);display:flex;flex-direction:column;gap:var(--s-4)}
+@media (max-width:640px){.game{padding:var(--s-4)}}
+.game-top{display:flex;justify-content:space-between;align-items:center;gap:var(--s-3);font-size:.875rem;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums}
 .pips{display:flex;gap:4px}
-.pips i{width:16px;height:5px;border-radius:3px;background:var(--line)}
-.pips i.r{background:var(--ok)} .pips i.w{background:var(--pink)} .pips i.now{background:var(--ink)}
-.card{position:relative;background:var(--paper);border:2px solid var(--line);border-radius:20px;padding:20px 18px;touch-action:pan-y;user-select:none;cursor:grab;transition:transform 200ms var(--ease-out),border-color 160ms ease;will-change:transform}
+.pips i{width:14px;height:4px;border-radius:2px;background:var(--line)}
+.pips i.r{background:var(--ok)} .pips i.w{background:var(--accent)} .pips i.now{background:var(--ink)}
+.card{position:relative;background:var(--paper);border:1.5px solid var(--line);border-radius:var(--r-md);padding:var(--s-5) var(--s-5) var(--s-4);touch-action:pan-y;user-select:none;cursor:grab;transition:transform 240ms var(--m-ease),border-color var(--m-out) ease;will-change:transform}
 .card.drag{transition:none;cursor:grabbing}
-.card.right{border-color:var(--ok)} .card.wrong{border-color:var(--pink)}
-.card .side{position:absolute;top:12px;font-family:var(--display);font-weight:800;font-size:1rem;opacity:0}
-.card .side.l{left:16px;color:var(--ok)} .card .side.r{right:16px;color:var(--pink)}
-.case{font-family:var(--display);font-weight:700;font-size:1.65rem;line-height:1.15;min-height:3.6em;padding-top:14px}
-.swipe-hint{font-size:.85rem;color:var(--muted)}
-.opts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.opt{border:2px solid var(--line);background:var(--surface);border-radius:14px;padding:12px 6px;font-family:var(--display);font-weight:800;font-size:1.25rem}
-@media (hover:hover) and (pointer:fine){.opt:hover:not([disabled]){border-color:var(--ink)}.pledge:hover{border-color:var(--muted)}}
+.card.right{border-color:var(--ok)} .card.wrong{border-color:var(--accent)}
+.card .side{position:absolute;top:var(--s-3);font-size:.8125rem;font-weight:500;opacity:0}
+.card .side.l{left:var(--s-4);color:var(--ok)} .card .side.r{right:var(--s-4);color:var(--accent)}
+.case{font-family:var(--display);font-size:1.625rem;line-height:1.25;letter-spacing:-.01em;min-height:3.75em;padding-top:var(--s-3)}
+.swipe-hint{font-size:.875rem;color:var(--muted)}
+.opts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s-2)}
+.opt{min-height:48px;border:1.5px solid var(--line);background:var(--surface);border-radius:var(--r-sm);padding:var(--s-2);font-weight:500;font-size:1rem}
+@media (hover:hover) and (pointer:fine){
+  .opt:hover:not([disabled]){border-color:var(--ink);transform:translateY(-1px);transition-duration:var(--m-in)}
+  .pledge:hover:not([aria-pressed="true"]){border-color:var(--muted);transition-duration:var(--m-in)}
+  .legend button:hover b{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
+}
 .opt.right{border-color:var(--ok);color:var(--ok)}
-.opt.wrong{border-color:var(--pink);color:var(--pink)}
+.opt.wrong{border-color:var(--accent);color:var(--accent)}
 .opt[disabled]{cursor:default}
-.fb{display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--line);padding-top:14px}
-.fb .tag{font-family:var(--display);font-weight:700;font-size:.9rem;color:var(--pink)}
+.fb{display:flex;flex-direction:column;gap:var(--s-2);border-top:1px solid var(--line);padding-top:var(--s-4)}
+.fb p{font-size:1rem}
+.fb .tag{font-size:.875rem;font-weight:500;color:var(--accent)}
+.fb .tag.ok{color:var(--ok)}
+.fb .btn{align-self:flex-start}
+#gNext{align-self:flex-start}
+@media (max-width:640px){#gNext,.fb .btn{align-self:stretch}}
 .review{margin:0;padding:0;list-style:none;display:flex;flex-direction:column}
-.review li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.92rem}
-.review .mk{font-weight:700}
-.review .mk.r{color:var(--ok)} .review .mk.w{color:var(--pink)}
+.review li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:var(--s-2);padding:10px 0;border-bottom:1px solid var(--line);font-size:1rem}
+.review .mk{font-weight:500}
+.review .mk.r{color:var(--ok)} .review .mk.w{color:var(--accent)}
 
 /* 5. ciclo */
-.cycle-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:center}
+.cycle-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s-5);align-items:center}
 @media (max-width:580px){.cycle-wrap{grid-template-columns:1fr}}
 .cycle-wrap svg{width:100%;max-width:300px;height:auto;display:block;margin-inline:auto}
-.arc{fill:none;stroke-width:26;cursor:pointer}
-.arc.t{stroke:var(--warn)} .arc.e{stroke:var(--pink)} .arc.l{stroke:var(--off)}
-.arc.dim{opacity:.35}
+.arc{fill:none;stroke-width:24;cursor:pointer}
+.arc.t{stroke:var(--warn)} .arc.e{stroke:var(--accent)} .arc.l{stroke:var(--off)}
+.arc.dim{opacity:.3}
 .arrowhead{fill:var(--ink)}
-.cyc-center{fill:var(--ink);font-family:var(--display);font-weight:800;font-size:20px}
-.cyc-sub{fill:var(--muted);font-family:var(--body);font-size:12px}
-.seg{display:inline-flex;border:2px solid var(--ink);border-radius:999px;padding:3px;gap:3px;align-self:flex-start}
-.seg button{border:0;background:transparent;border-radius:999px;padding:7px 14px;font-family:var(--display);font-weight:700;font-size:.95rem}
+.cyc-center{fill:var(--ink);font-family:var(--display);font-size:22px;letter-spacing:-.01em}
+.cyc-sub{fill:var(--muted);font-family:var(--body);font-weight:500;font-size:13px}
+.seg{display:inline-flex;border:1.5px solid var(--ink);border-radius:999px;padding:3px;gap:2px;align-self:flex-start}
+.seg button{min-height:38px;border:0;background:transparent;border-radius:999px;padding:0 var(--s-4);font-weight:500;font-size:.9375rem}
+@media (hover:hover) and (pointer:fine){.seg button[aria-pressed="false"]:hover{background:color-mix(in oklab, var(--ink) 7%, transparent);transition-duration:var(--m-in)}}
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
-.legend{display:flex;flex-direction:column;gap:10px;min-width:0}
-.legend button{display:grid;grid-template-columns:14px minmax(0,1fr);gap:10px;align-items:start;text-align:left;background:none;border:0;padding:8px 0;border-bottom:1px solid var(--line)}
-.legend .sw{width:14px;height:14px;border-radius:4px;margin-top:5px}
-.sw.t{background:var(--warn)} .sw.e{background:var(--pink)} .sw.l{background:var(--off)}
-.legend b{font-family:var(--display);font-size:1.05rem;display:block}
-.legend span{font-size:.92rem;color:var(--muted)}
-.legend button[aria-pressed="true"] span{color:var(--ink)}
+.legend{display:flex;flex-direction:column;min-width:0;border-top:1px solid var(--line)}
+.legend button{display:grid;grid-template-columns:12px minmax(0,1fr);gap:var(--s-3);align-items:start;text-align:left;background:none;border:0;padding:var(--s-3) 0;border-bottom:1px solid var(--line)}
+.legend .sw{width:12px;height:12px;border-radius:3px;margin-top:7px}
+.sw.t{background:var(--warn)} .sw.e{background:var(--accent)} .sw.l{background:var(--off)}
+.legend b{font-weight:500;font-size:1rem;display:block}
+.legend span{font-size:1rem;color:var(--ink-2)}
+.legend button[aria-pressed="false"] > span{opacity:.62;transition:opacity var(--m-out) ease}
+.legend button[aria-pressed="true"] > span{opacity:1}
 
 /* 6. causas */
-.eco{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:center}
+.eco{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s-5);align-items:center}
 @media (max-width:580px){.eco{grid-template-columns:1fr}}
 .eco svg{width:100%;max-width:300px;height:auto;display:block;margin-inline:auto}
 .ring{cursor:pointer;stroke:var(--paper);stroke-width:3}
-.ring.r0{fill:var(--pink);opacity:.18}.ring.r1{fill:var(--pink);opacity:.32}.ring.r2{fill:var(--pink);opacity:.5}.ring.r3{fill:var(--pink);opacity:.75}
+.ring.r0{fill:var(--accent);opacity:.14}.ring.r1{fill:var(--accent);opacity:.26}.ring.r2{fill:var(--accent);opacity:.42}.ring.r3{fill:var(--accent);opacity:.64}
 .ring.on{opacity:1}
-.ring-lbl{fill:var(--ink);font-family:var(--display);font-weight:800;font-size:13px;pointer-events:none}
-.conseq{display:flex;flex-wrap:wrap;gap:8px}
-.conseq span{border:1.5px solid var(--line);border-radius:999px;padding:5px 13px;font-size:.92rem}
+.ring-lbl{fill:var(--ink);font-family:var(--body);font-weight:500;font-size:13px;pointer-events:none}
+.conseq{display:flex;flex-wrap:wrap;gap:var(--s-2)}
+.conseq span{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:1rem}
 
 /* 7. voces */
-.voices{display:flex;flex-direction:column;border-top:2px solid var(--ink)}
-.voice{padding:18px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:190px minmax(0,1fr);gap:4px 24px;align-items:baseline;min-width:0}
+.voices{display:flex;flex-direction:column;border-top:1px solid var(--ink)}
+.voice{padding:var(--s-5) 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:200px minmax(0,1fr);gap:var(--s-1) var(--s-5);align-items:baseline;min-width:0}
 .voice h3,.voice .yrs{grid-column:1}
-.voice > p{grid-column:2;grid-row:1 / span 2}
-.voice > p.here{grid-row:3}
-@media (max-width:580px){.voice{display:flex;flex-direction:column;gap:6px}}
-.voice h3{font-size:1.25rem}
-.voice .yrs{font-size:.82rem;color:var(--muted)}
-.voice .here{font-size:.95rem;color:var(--pink)}
+.voice > p{grid-column:2;grid-row:1 / span 2;font-size:1rem}
+.voice > p.here{grid-row:3;font-weight:500}
+@media (max-width:580px){.voice{display:flex;flex-direction:column;gap:var(--s-2)}}
+.voice h3{font-size:1.375rem}
+.voice .yrs{font-size:.8125rem;font-weight:500;color:var(--muted)}
 
 /* 8. prevenir */
-.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px}
-@media (max-width:520px){.two{grid-template-columns:1fr}}
-.two > div{display:flex;flex-direction:column;gap:10px;border-top:2px solid var(--ink);padding-top:14px;min-width:0}
-.two ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s-6)}
+@media (max-width:520px){.two{grid-template-columns:1fr;gap:var(--s-5)}}
+.two > div{display:flex;flex-direction:column;gap:var(--s-3);border-top:1px solid var(--ink);padding-top:var(--s-4);min-width:0}
+.two ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:var(--s-2);font-size:1rem}
 
 /* cierre */
-.check{display:flex;flex-direction:column}
-.check label{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer}
-.check input{width:22px;height:22px;margin-top:3px;accent-color:var(--pink);flex:none}
-.light{display:grid;grid-template-columns:auto minmax(0,1fr);gap:18px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:18px}
-.lamp{display:flex;flex-direction:column;gap:6px;background:var(--ink);padding:8px;border-radius:999px}
-.lamp i{width:22px;height:22px;border-radius:50%;background:var(--off);opacity:.35}
+.check{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.check label{display:flex;gap:var(--s-3);align-items:flex-start;padding:var(--s-3) 0;border-bottom:1px solid var(--line);cursor:pointer;font-size:1rem}
+.check input{width:20px;height:20px;margin-top:3px;flex:none}
+.light{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--s-4);align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:var(--s-4) var(--s-5)}
+.light p{font-size:1rem}
+.lamp{display:flex;flex-direction:column;gap:6px;background:var(--ink);padding:7px;border-radius:999px}
+.lamp i{width:20px;height:20px;border-radius:50%;background:var(--off);opacity:.35}
 .light.r .lamp i:nth-child(1){background:#E5484D;opacity:1}
 .light.y .lamp i:nth-child(2){background:#F2B133;opacity:1}
 .light.g .lamp i:nth-child(3){background:#3DBE7E;opacity:1}
-.light p b{font-family:var(--display);font-size:1.15rem;display:block}
-.pledges{display:flex;flex-direction:column;gap:8px}
-.pledge{text-align:left;background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:13px 16px}
-.pledge[aria-pressed="true"]{border-color:var(--pink);background:var(--pink-soft)}
-.share{background:var(--ink);color:var(--paper);border-radius:26px;padding:24px;display:flex;flex-direction:column;gap:14px}
-.share h3{font-size:1.6rem;}
-.share textarea{width:100%;min-height:96px;border:0;border-radius:14px;padding:12px 14px;font:inherit;font-size:.98rem;background:var(--paper);color:var(--ink);resize:vertical}
-.share .btn{align-self:flex-start;background:var(--hope-fill);color:#1B1B3A}
-.reveal .poster{margin:6px 0 0;font-family:var(--display);font-weight:900;font-size:clamp(3rem, 14vw, 5.6rem);line-height:.9;letter-spacing:-.005em}
-.reveal .poster span{background:linear-gradient(transparent 14%, var(--pink-hl) 14%, var(--pink-hl) 90%, transparent 90%);box-decoration-break:clone;-webkit-box-decoration-break:clone;padding:0 .06em}
-.hope .chap-num{color:var(--hope)}
+.light p b{font-family:var(--display);font-weight:400;font-size:1.375rem;display:block;line-height:1.2}
+.pledges{display:flex;flex-direction:column;gap:var(--s-2)}
+.pledge{text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:var(--r-md);padding:var(--s-3) var(--s-4);font-size:1rem}
+.share{background:var(--ink);color:var(--paper);border-radius:var(--r-lg);padding:var(--s-6);display:flex;flex-direction:column;gap:var(--s-4)}
+@media (max-width:640px){.share{padding:var(--s-5)}}
+.share h3{font-size:1.75rem}
+.share p{font-size:1rem;opacity:.86}
+.share textarea{width:100%;min-height:104px;border:0;border-radius:var(--r-md);padding:var(--s-3) var(--s-4);font:inherit;font-size:1rem;background:var(--paper);color:var(--ink);resize:vertical}
+.share .btn{align-self:flex-start;background:var(--hope-fill);color:#1D1B18}
+@media (hover:hover) and (pointer:fine){.share .btn:hover{background:color-mix(in oklab, var(--hope-fill) 86%, #1D1B18)}}
+@media (max-width:640px){.share .btn{align-self:stretch}}
 .hope .two > div{border-top-color:var(--hope)}
 .hope .check input{accent-color:var(--hope-fill)}
 .hope .pledge[aria-pressed="true"]{border-color:var(--hope-fill);background:var(--hope-soft)}
-.hope-intro{font-family:var(--display);font-weight:800;font-size:1.6rem;line-height:1.1;color:var(--hope)}
-.track i.hopefill{background:var(--hope-fill)}
+.hope-intro{font-family:var(--display);font-style:italic;font-size:1.5rem;line-height:1.3;color:var(--hope)}
 
-footer{border-top:2px solid var(--ink);padding-top:18px;display:flex;flex-direction:column;gap:12px;font-size:.88rem;color:var(--muted)}
-footer ul{margin:0;padding-left:18px}
+footer{border-top:1px solid var(--ink);padding-top:var(--s-5);display:flex;flex-direction:column;gap:var(--s-3);font-size:.875rem;color:var(--muted)}
+footer ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:2px}
+footer .label{color:var(--ink);margin-top:var(--s-2)}
 
-.reveal,.fb,.light p{transition:opacity 300ms var(--ease-out),transform 300ms var(--ease-out)}
-@starting-style{.reveal,.fb{opacity:0;transform:translateY(8px)}}
+.reveal,.fb,.light p{transition:opacity 200ms var(--m-ease),transform 200ms var(--m-ease)}
+@starting-style{.reveal,.fb{opacity:0;transform:translateY(6px)}}
 .lamp i{transition:background-color 200ms ease,opacity 200ms ease}
-.track i{transition:background-color 300ms ease}
 .arc,.ring{transition:opacity 200ms ease}
 @media (prefers-reduced-motion: reduce){
   *{animation-duration:1ms!important;animation-iteration-count:1!important}
   .reveal,.fb{transition:opacity 200ms ease}
   @starting-style{.reveal,.fb{transform:none}}
-  .btn:active,.opt:active,.pledge:active,.seg button:active{transform:none}
+  .btn,.opt,.pledge,.seg button{transform:none!important}
 }
 </style>
 </head>
 <body>
 
-<div class="topbar" aria-hidden="true"><div class="topbar-in">
-  <span class="topbar-label" id="tlabel">El chat</span>
-  <div class="track"><i id="tfill"></i></div>
-</div></div>
-
 <main class="wrap">
 
 <section class="hero" data-label="El chat">
-  <p class="kicker">Educación para la Paz, UNIMET</p>
+  <p class="label">Educación para la Paz · UNIMET · 10 minutos</p>
   <h1 id="title"><span><span id="titleText">¿Esto es amor?</span><span class="caret"></span></span><span class="edited" id="edited" hidden>editado</span></h1>
   <p class="lead">Te acaba de llegar este chat. Ábrelo mensaje por mensaje y fíjate cuáles te parecen normales.</p>
 
@@ -282,21 +296,21 @@ footer ul{margin:0;padding-left:18px}
     <div class="phone-head"><div class="avatar">D</div><div class="who"><b>Dani</b><span id="status">en línea</span></div></div>
     <div class="chat" id="chat" aria-live="polite"><span class="stamp">Viernes, 7:42 p. m.</span></div>
     <div class="phone-foot">
-      <button class="btn" id="nextMsg" type="button">Siguiente mensaje</button>
-      <button class="btn hot" id="markBtn" type="button" hidden>Resaltar las señales</button>
+      <button class="btn" id="nextMsg" type="button">Leer el siguiente mensaje</button>
+      <button class="btn" id="markBtn" type="button" hidden>Resaltar las señales</button>
     </div>
   </div>
 
   <div class="reveal" id="reveal" hidden>
-    <p class="poster" aria-label="Si de verdad me quisieras"><span>Si de verdad me quisieras…</span></p>
-    <p class="muted small">Una frase que se oye en cualquier pasillo. Suena a cariño y funciona como chantaje.</p>
+    <p class="poster">“Si de verdad me quisieras…”</p>
+    <p class="aside">Una frase que se oye en cualquier pasillo. Suena a cariño y funciona como chantaje.</p>
     <p class="verdict">Los ocho mensajes de Dani son violencia psicológica.</p>
     <p>Ninguno trae un golpe, y por eso pasan como celos o cariño. Hay control del teléfono, vigilancia de la ubicación, culpa, aislamiento de los amigos, silencio como castigo y una disculpa que vuelve a empezar todo. Si alguno te pareció normal, sigue bajando.</p>
   </div>
 </section>
 
 <section class="chap" data-label="1 de 8: Agresividad y violencia">
-  <div class="chap-head"><span class="chap-num">1</span><h2>Agresividad y violencia</h2></div>
+  <div class="chap-head"><span class="chap-num">Capítulo 1 de 8</span><h2>Agresividad y violencia</h2></div>
   <p>Solemos usarlas como sinónimos, pero la psicología las separa. Y esa diferencia es la que hace que la violencia se pueda prevenir.</p>
   <div class="split">
     <div><span class="term">Agresividad</span>
@@ -310,7 +324,7 @@ footer ul{margin:0;padding-left:18px}
 </section>
 
 <section class="chap" data-label="2 de 8: El triángulo de Galtung">
-  <div class="chap-head"><span class="chap-num">2</span><h2>Lo que se ve y lo que la sostiene</h2></div>
+  <div class="chap-head"><span class="chap-num">Capítulo 2 de 8</span><h2>Lo que se ve y lo que la sostiene</h2></div>
   <p>Johan Galtung (1930-2024), sociólogo noruego y pionero de los estudios de paz, dibujó la violencia como un triángulo. Arriba está la que se ve. Abajo, dos formas que casi nunca notamos y que la mantienen viva. Toca cada punta.</p>
   <div class="diagram">
     <svg viewBox="0 0 330 300" role="group" aria-label="Triángulo de la violencia de Galtung">
@@ -329,19 +343,19 @@ footer ul{margin:0;padding-left:18px}
 </section>
 
 <section class="chap" data-label="3 de 8: Formas de violencia">
-  <div class="chap-head"><span class="chap-num">3</span><h2>Las formas que toma</h2></div>
-  <p class="muted small">La OMS divide la violencia en autoinfligida, interpersonal y colectiva. Aquí nos quedamos con la interpersonal, la que pasa entre parejas, amigos y compañeros.</p>
+  <div class="chap-head"><span class="chap-num">Capítulo 3 de 8</span><h2>Las formas que toma</h2></div>
+  <p class="aside">La OMS divide la violencia en autoinfligida, interpersonal y colectiva. Aquí nos quedamos con la interpersonal, la que pasa entre parejas, amigos y compañeros.</p>
   <div class="forms">
     <div class="form-row"><b>Física</b><span>Empujones, apretones, golpes, encerrar a alguien.</span></div>
-    <div class="form-row star"><b>Psicológica</b><span>Humillar, celar, culpar, amenazar, aplicar la ley del hielo. Es la más normalizada y casi siempre llega primero.</span></div>
+    <div class="form-row"><b>Psicológica</b><span>Humillar, celar, culpar, amenazar, aplicar la ley del hielo. Es la más normalizada y casi siempre llega primero.</span></div>
     <div class="form-row"><b>Digital</b><span>Pedir contraseñas, exigir la ubicación, revisar chats, publicar o amenazar con publicar fotos.</span></div>
-    <div class="form-row"><b>Sexual</b><span>Insistir hasta que el otro "acepte", o tocar sin consentimiento.</span></div>
+    <div class="form-row"><b>Sexual</b><span>Insistir hasta que el otro “acepte”, o tocar sin consentimiento.</span></div>
     <div class="form-row"><b>Económica</b><span>Controlar el dinero del otro o hacerle sentir que debe algo porque le pagan las salidas.</span></div>
   </div>
 </section>
 
 <section class="chap" data-label="4 de 8: ¿Es violencia?">
-  <div class="chap-head"><span class="chap-num">4</span><h2>¿Es violencia o no?</h2></div>
+  <div class="chap-head"><span class="chap-num">Capítulo 4 de 8</span><h2>¿Es violencia o no?</h2></div>
   <p>Diez situaciones que pasan en cualquier universidad. Contesta rápido, sin pensarlo mucho, y después lee por qué.</p>
   <div class="game" id="game">
     <div class="game-top"><span id="gCount">Caso 1 de 10</span><span class="pips" id="pips" aria-hidden="true"></span></div>
@@ -349,12 +363,12 @@ footer ul{margin:0;padding-left:18px}
     <p class="swipe-hint" id="hint">Desliza la tarjeta a la derecha si es violencia y a la izquierda si no. También puedes usar los botones.</p>
     <div class="opts" id="gOpts"></div>
     <div class="fb" id="gFb" hidden></div>
-    <button class="btn" id="gNext" type="button" hidden>Siguiente caso</button>
+    <button class="btn" id="gNext" type="button" hidden>Ver el siguiente caso</button>
   </div>
 </section>
 
 <section class="chap" data-label="5 de 8: El ciclo">
-  <div class="chap-head"><span class="chap-num">5</span><h2>¿Por qué no se va y ya?</h2></div>
+  <div class="chap-head"><span class="chap-num">Capítulo 5 de 8</span><h2>¿Por qué no se va y ya?</h2></div>
   <p>La psicóloga Lenore Walker entrevistó a más de cien mujeres para su libro de 1979 y encontró que la violencia en pareja se repite en un ciclo de tres fases. Mira qué pasa con el tiempo.</p>
   <div class="seg" role="group" aria-label="Momento de la relación">
     <button type="button" id="cycEarly" aria-pressed="true">Al principio</button>
@@ -372,15 +386,15 @@ footer ul{margin:0;padding-left:18px}
     <div class="legend" id="legend">
       <button type="button" data-k="t" aria-pressed="false"><i class="sw t"></i><span><b>Tensión</b><span>Reclamos, celos, silencios. La otra persona camina sobre cáscaras de huevo para no molestar.</span></span></button>
       <button type="button" data-k="e" aria-pressed="false"><i class="sw e"></i><span><b>Explosión</b><span>Insultos, gritos, amenazas o agresión física. Es lo único que todos reconocen.</span></span></button>
-      <button type="button" data-k="l" aria-pressed="true"><i class="sw l"></i><span><b>Luna de miel</b><span>Perdón, regalos, "no va a volver a pasar". Da esperanza y por eso amarra.</span></span></button>
+      <button type="button" data-k="l" aria-pressed="true"><i class="sw l"></i><span><b>Luna de miel</b><span>Perdón, regalos, “no va a volver a pasar”. Da esperanza y por eso amarra.</span></span></button>
     </div>
   </div>
   <p>Con los meses la luna de miel se acorta y la tensión ocupa casi todo. La psiquiatra Marie-France Hirigoyen describe cómo el maltrato psicológico va gastando la autoestima hasta que la persona duda de su propio criterio.</p>
-  <p class="think"><b>Piénsalo</b>¿Te acuerdas del último mensaje de Dani, "perdón amor, es que te amo demasiado"? Esa era la luna de miel.</p>
+  <p class="think"><b>Piénsalo</b>¿Te acuerdas del último mensaje de Dani, “perdón amor, es que te amo demasiado”? Esa era la luna de miel.</p>
 </section>
 
 <section class="chap" data-label="6 de 8: Causas y consecuencias">
-  <div class="chap-head"><span class="chap-num">6</span><h2>De dónde viene y qué deja</h2></div>
+  <div class="chap-head"><span class="chap-num">Capítulo 6 de 8</span><h2>De dónde viene y qué deja</h2></div>
   <p>La OMS usa un modelo ecológico: la violencia sale de varios factores que se suman, desde la persona hasta la sociedad entera. Toca cada círculo.</p>
   <div class="eco">
     <svg viewBox="0 0 300 300" role="group" aria-label="Modelo ecológico de la violencia">
@@ -402,12 +416,12 @@ footer ul{margin:0;padding-left:18px}
 </section>
 
 <section class="chap" data-label="7 de 8: Voces">
-  <div class="chap-head"><span class="chap-num">7</span><h2>Gente que ya nos dejó pistas</h2></div>
+  <div class="chap-head"><span class="chap-num">Capítulo 7 de 8</span><h2>Gente que ya nos dejó pistas</h2></div>
   <p>Ninguno de ellos habló de noviazgos universitarios, pero lo que defendieron aplica aquí mismo.</p>
   <div class="voices">
     <div class="voice"><h3>Mahatma Gandhi</h3><span class="yrs">India, 1869-1948</span>
       <p>Defendió la <i>ahimsa</i>: no hacer daño con acciones, palabras ni pensamientos.</p>
-      <p class="here">Si las palabras hacen daño, un "si me quisieras no irías" también cuenta.</p></div>
+      <p class="here">Si las palabras hacen daño, un “si me quisieras no irías” también cuenta.</p></div>
     <div class="voice"><h3>Martin Luther King Jr.</h3><span class="yrs">Estados Unidos, 1929-1968. Nobel de la Paz 1964</span>
       <p>Escribió que el silencio de la gente buena también sostiene la injusticia.</p>
       <p class="here">Cuando un amigo controla a su pareja y nos reímos, ya estamos participando.</p></div>
@@ -427,25 +441,25 @@ footer ul{margin:0;padding-left:18px}
 </section>
 
 <section class="chap hope" data-label="8 de 8: Prevenir y actuar">
+  <div class="chap-head"><span class="chap-num">Capítulo 8 de 8</span><h2>Qué hacer</h2></div>
   <p class="hope-intro">Ya viste las señales. Ahora, lo que sí puedes hacer.</p>
-  <div class="chap-head"><span class="chap-num">8</span><h2>Qué hacer</h2></div>
   <div class="two">
     <div><h3>Si te pasa a ti</h3><ul>
-      <li>Ponle nombre: "lo que me está pasando es control".</li>
+      <li>Ponle nombre: “lo que me está pasando es control”.</li>
       <li>Cuéntaselo a alguien de confianza.</li>
       <li>Busca el servicio de orientación psicológica de la universidad.</li>
       <li>Guarda capturas si hay amenazas.</li></ul></div>
     <div><h3>Si le pasa a un amigo</h3><ul>
-      <li>Escucha sin juzgar y sin decirle "déjalo ya".</li>
+      <li>Escucha sin juzgar y sin decirle “déjalo ya”.</li>
       <li>No te alejes aunque vuelva con esa persona.</li>
       <li>Recuérdale lo que vale fuera de la relación.</li>
       <li>Si hay peligro físico, busca ayuda de inmediato.</li></ul></div>
   </div>
-  <p class="muted small">En Venezuela, la Ley Orgánica sobre el Derecho de las Mujeres a una Vida Libre de Violencia castiga la violencia psicológica y el acoso contra la mujer como delitos, además de la física.</p>
+  <p class="aside">En Venezuela, la Ley Orgánica sobre el Derecho de las Mujeres a una Vida Libre de Violencia castiga la violencia psicológica y el acoso contra la mujer como delitos, además de la física.</p>
 </section>
 
 <section class="chap hope" data-label="Para cerrar">
-  <div class="chap-head solo"><h2>Tu semáforo</h2></div>
+  <div class="chap-head"><span class="chap-num">Para cerrar</span><h2>Tu semáforo</h2></div>
   <p>Esto queda solo en tu teléfono. Marca lo que te haya pasado en alguna relación, de pareja o de amistad, en el último año.</p>
   <div class="check">
     <label><input type="checkbox" id="q1"> Me han pedido la ubicación o las contraseñas como prueba de confianza.</label>
@@ -475,7 +489,7 @@ footer ul{margin:0;padding-left:18px}
 <footer>
   <p>Hecho por Samir Nassar para Educación para la Paz, Universidad Metropolitana, noviembre de 2026.</p>
   <p>El naranja de la parte final viene de la campaña Únete de ONU Mujeres, que lo usa como color de esperanza en un futuro sin violencia contra las mujeres.</p>
-  <p>Fuentes</p>
+  <p class="label">Fuentes</p>
   <ul>
     <li>Galtung, J. (1969). Violence, peace, and peace research. Journal of Peace Research, 6(3).</li>
     <li>Galtung, J. (1990). Cultural violence. Journal of Peace Research, 27(3).</li>
@@ -559,9 +573,9 @@ footer ul{margin:0;padding-left:18px}
 
   /* ---------- TRIÁNGULO ---------- */
   var tri={
-    directa:{h:"Violencia directa",p:"La que se ve: insultos, gritos, golpes, amenazas. Tiene un responsable claro y pasa en un momento concreto.",e:"\"Si vas a esa fiesta terminamos\", o un empujón a la salida de una rumba."},
+    directa:{h:"Violencia directa",p:"La que se ve: insultos, gritos, golpes, amenazas. Tiene un responsable claro y pasa en un momento concreto.",e:"“Si vas a esa fiesta terminamos”, o un empujón a la salida de una rumba."},
     estructural:{h:"Violencia estructural",p:"Está en cómo se reparten las cosas y deja a unos en desventaja. Nadie da el golpe, pero el daño ocurre igual.",e:"Si tu pareja pone el carro, la gasolina y las salidas, decirle que no te cuesta más."},
-    cultural:{h:"Violencia cultural",p:"Las creencias, canciones, chistes y frases que hacen ver la violencia como algo normal o hasta bonito. Justifica a las otras dos.",e:"\"Si no te cela es que no le importas\", o reírse cuando un pana cuenta que le revisó el teléfono a la novia."}
+    cultural:{h:"Violencia cultural",p:"Las creencias, canciones, chistes y frases que hacen ver la violencia como algo normal o hasta bonito. Justifica a las otras dos.",e:"“Si no te cela es que no le importas”, o reírse cuando un pana cuenta que le revisó el teléfono a la novia."}
   };
   var triD=document.getElementById('triDetail'), vxs=document.querySelectorAll('.vx');
   function showTri(k){
@@ -580,16 +594,16 @@ footer ul{margin:0;padding-left:18px}
 
   /* ---------- JUEGO ---------- */
   var cases=[
-    {c:"Tu pareja te pide la contraseña de Instagram \"porque entre nosotros no hay secretos\".",a:0,tag:"Psicológica y digital",x:"Tener privacidad es normal en una pareja. Exigir acceso a tus cuentas es vigilancia."},
+    {c:"Tu pareja te pide la contraseña de Instagram “porque entre nosotros no hay secretos”.",a:0,tag:"Psicológica y digital",x:"Tener privacidad es normal en una pareja. Exigir acceso a tus cuentas es vigilancia."},
     {c:"Un compañero te deja de hablar dos días porque no le pasaste la tarea.",a:2,tag:"Depende del patrón",x:"Un enojo puntual no es violencia. Si usa el silencio siempre para castigarte y que cedas, ya es manipulación."},
     {c:"Tu novia te dice con calma que se siente celosa de una amiga tuya.",a:1,tag:"No es violencia",x:"Sentir celos y decirlo es comunicarse. Sería violencia si te exige dejar de ver a tu amiga."},
     {c:"En el grupo de la sección se burlan todos los días de cómo habla un compañero.",a:0,tag:"Psicológica entre compañeros",x:"La burla repetida es acoso. Y quien se ríe sin decir nada la está sosteniendo."},
-    {c:"En un trabajo en equipo, dos compañeros deciden todo y al tercero le dicen \"tú solo pon tu nombre, igual no sabes\".",a:0,tag:"Exclusión en el aula",x:"Apartar y humillar a alguien frente al grupo es violencia psicológica, aunque se diga en tono de chiste."},
+    {c:"En un trabajo en equipo, dos compañeros deciden todo y al tercero le dicen “tú solo pon tu nombre, igual no sabes”.",a:0,tag:"Exclusión en el aula",x:"Apartar y humillar a alguien frente al grupo es violencia psicológica, aunque se diga en tono de chiste."},
     {c:"Tu pareja te compra la ropa y opina sobre todo lo que te pones para salir.",a:0,tag:"Control",x:"Decidir sobre tu imagen y tu cuerpo es control, aunque venga envuelto en regalos."},
     {c:"Después de una pelea fuerte te pide perdón con flores y te jura que va a cambiar. Es la tercera vez este mes.",a:0,tag:"Ciclo de la violencia",x:"Es la luna de miel de Walker. Si se repite, el perdón es una fase más del ciclo."},
     {c:"Alguien hace un sticker con la cara de una compañera y lo pasa por todos los grupos de la carrera.",a:0,tag:"Digital",x:"Ridiculizar a alguien por los grupos es ciberacoso. Se riega en minutos y no hay forma de borrarlo."},
     {c:"Tu amigo comparte en un chat la captura de lo que su ex le escribió en privado, para reírse.",a:0,tag:"Digital",x:"Exponer conversaciones privadas sin permiso humilla a la otra persona, aunque parezca un chisme más."},
-    {c:"Le dices a tu pareja que esta noche prefieres quedarte en tu casa, y te contesta \"dale, descansa\".",a:1,tag:"Relación sana",x:"Así se ve el respeto: un no se recibe sin culpa y sin castigo."}
+    {c:"Le dices a tu pareja que esta noche prefieres quedarte en tu casa, y te contesta “dale, descansa”.",a:1,tag:"Relación sana",x:"Así se ve el respeto: un no se recibe sin culpa y sin castigo."}
   ];
   var labels=["Sí es","No es","Depende"], gi=0, score=0, res=[], locked=false;
   var card=document.getElementById('card'), hint=document.getElementById('hint'), sideL=document.getElementById('sideL'), sideR=document.getElementById('sideR');
@@ -597,7 +611,7 @@ footer ul{margin:0;padding-left:18px}
   card.addEventListener('pointerdown',function(e){if(locked||pid!==null)return;pid=e.pointerId;sx=e.clientX;dx=0;t0=performance.now();card.classList.add('drag');card.setPointerCapture(e.pointerId)});
   card.addEventListener('pointermove',function(e){if(e.pointerId!==pid)return;var raw=e.clientX-sx;
     var lim=160;dx=Math.abs(raw)<lim?raw:Math.sign(raw)*(lim+(Math.abs(raw)-lim)*.35);
-    card.style.transform='translateX('+dx+'px) rotate('+(dx/24)+'deg)';
+    card.style.transform='translateX('+dx+'px)';
     sideR.style.opacity=Math.max(0,Math.min(1,dx/90));sideL.style.opacity=Math.max(0,Math.min(1,-dx/90))});
   function release(e){if(e.pointerId!==pid)return;pid=null;sx=null;card.classList.remove('drag');
     var v=Math.abs(dx)/Math.max(1,performance.now()-t0), go=Math.abs(dx)>=90||(v>0.11&&Math.abs(dx)>24);
@@ -625,7 +639,7 @@ footer ul{margin:0;padding-left:18px}
     var t=document.createElement('span');t.className='tag'+(ok?' ok':'');t.textContent=(ok?'Bien. ':'Ojo. ')+k.tag;
     var p=document.createElement('p');p.textContent=k.x;
     gFb.append(t,p); gFb.hidden=false;
-    gNext.textContent=gi<cases.length-1?'Siguiente caso':'Ver cómo me fue'; gNext.hidden=false; gNext.focus({preventScroll:true});
+    gNext.textContent=gi<cases.length-1?'Ver el siguiente caso':'Ver cómo me fue'; gNext.hidden=false; gNext.focus({preventScroll:true});
   }
   gNext.addEventListener('click',function(){
     if(gi<cases.length-1){gi++;renderCase();return}
@@ -715,17 +729,6 @@ footer ul{margin:0;padding-left:18px}
     try{navigator.clipboard.writeText(ta.value).then(ok,fail)}catch(e){fail()}
   });
 
-  /* ---------- AVANCE ---------- */
-  var fill=document.getElementById('tfill'), lab=document.getElementById('tlabel'), secs=document.querySelectorAll('[data-label]');
-  function onScroll(){
-    var h=document.documentElement.scrollHeight-innerHeight; fill.style.width=(h>0?Math.min(100,scrollY/h*100):0)+'%';
-    var label=secs[0].dataset.label;
-    secs.forEach(function(s){if(s.getBoundingClientRect().top<innerHeight*.35)label=s.dataset.label});
-    lab.textContent=label;
-    var cur=null;secs.forEach(function(s){if(s.getBoundingClientRect().top<innerHeight*.35)cur=s});
-    fill.classList.toggle('hopefill',!!(cur&&cur.classList.contains('hope')));
-  }
-  addEventListener('scroll',onScroll,{passive:true}); onScroll();
 })();
 </script>
 </body>
