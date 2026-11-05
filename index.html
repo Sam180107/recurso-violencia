@@ -282,40 +282,70 @@ footer .label{color:var(--ink);margin-top:var(--s-2)}
   .btn,.opt,.pledge,.seg button{transform:none!important}
 }
 
-/* ---------- color: bandas a todo lo ancho, una por capítulo ---------- */
-:root{
-  --t-rose:#FBE1DB; --t-sand:#F7E6C4; --t-sage:#D7EADF; --t-sky:#D9E7F4; --t-hope:#FFE0C2; --t-hope2:#FFD0A3; --t-hero:#C8281E;
+/* ---------- color: toda la página en rojo; dos tonos alternados separan los capítulos ----------
+   El chat y el juego quedan como tarjetas claras encima, con su propio juego de tokens. */
+body,.on-red{
+  --red-a:#C8281E; --red-b:#B5221A;
+  --paper:var(--red-a); --surface:rgba(255,255,255,.10); --ink:#FFF6F0; --ink-2:#FFE6DE; --muted:#FFD3C8; --line:rgba(255,246,240,.28);
+  --accent:#FFE08A; --accent-hl:rgba(255,224,138,.35); --accent-soft:rgba(255,224,138,.18);
+  --hope:#FFC48A; --hope-fill:#FFB15C; --hope-soft:rgba(255,177,92,.22);
+  --warn:#FFB35C; --ok:#B8F5CF; --off:rgba(255,246,240,.5);
+  --bubble-them:rgba(255,255,255,.14);
+  background:var(--red-a); color:var(--ink);
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --t-rose:#2E1C1A; --t-sand:#2C2416; --t-sage:#18261F; --t-sky:#17212C; --t-hope:#2F2013; --t-hope2:#3A2512; --t-hero:#8E1A13}}
-:root[data-theme="dark"]{--t-rose:#2E1C1A; --t-sand:#2C2416; --t-sage:#18261F; --t-sky:#17212C; --t-hope:#2F2013; --t-hope2:#3A2512; --t-hero:#8E1A13}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) body{--red-a:#9E1D15; --red-b:#8A1811}}
+:root[data-theme="dark"] body{--red-a:#9E1D15; --red-b:#8A1811}
+/* tarjetas claras: vuelven a los tokens neutros */
+.phone,.game{
+  --paper:#F7F5F2; --surface:#FFFFFF; --ink:#1D1B18; --ink-2:#3D3934; --muted:#6A645C; --line:#DFDBD5;
+  --accent:#C8281E; --accent-hl:rgba(234,64,48,.22); --accent-soft:#FBE7E3;
+  --warn:#B07114; --ok:#2C7A57; --off:#B5AFA6; --bubble-them:#ECE9E4; --bubble-me:#1D1B18; --bubble-me-ink:#F7F5F2;
+  color:var(--ink); border-color:transparent; box-shadow:0 32px 64px -32px rgba(60,6,2,.55)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) :is(.phone,.game){
+  --paper:#161513; --surface:#201E1B; --ink:#F1EEE9; --ink-2:#D6D1CA; --muted:#A49E95; --line:#36322D;
+  --accent:#FF5E52; --accent-hl:rgba(255,94,82,.28); --ok:#5FCB97; --bubble-them:#2B2925; --bubble-me:#F1EEE9; --bubble-me-ink:#161513}}
+:root[data-theme="dark"] :is(.phone,.game){
+  --paper:#161513; --surface:#201E1B; --ink:#F1EEE9; --ink-2:#D6D1CA; --muted:#A49E95; --line:#36322D;
+  --accent:#FF5E52; --accent-hl:rgba(255,94,82,.28); --ok:#5FCB97; --bubble-them:#2B2925; --bubble-me:#F1EEE9; --bubble-me-ink:#161513}
+.phone :focus-visible,.game :focus-visible{outline-color:var(--accent)}
+
 .wrap{gap:0;padding-top:0}
-.band{position:relative;padding-block:var(--s-8);background:var(--bg,var(--paper));box-shadow:0 0 0 100vmax var(--bg,var(--paper));clip-path:inset(0 -100vmax)}
+.band{position:relative;padding-block:var(--s-8);background:var(--bg);box-shadow:0 0 0 100vmax var(--bg);clip-path:inset(0 -100vmax)}
 @media (max-width:640px){.band{padding-block:var(--s-7)}}
-.tone-rose{--bg:var(--t-rose)} .tone-sand{--bg:var(--t-sand)} .tone-sage{--bg:var(--t-sage)}
-.tone-sky{--bg:var(--t-sky)} .tone-hope{--bg:var(--t-hope)} .tone-hope2{--bg:var(--t-hope2)}
-.band .think,.band .light,.band .pledge:not([aria-pressed="true"]),.band .conseq span{border-color:color-mix(in oklab, var(--ink) 12%, transparent)}
-.band .forms .form-row,.band .split > div,.band .voice,.band .legend button,.band .check label,.band .review li,.band .legend,.band .check{border-color:color-mix(in oklab, var(--ink) 16%, transparent)}
-.band .below{fill:color-mix(in oklab, var(--ink) 8%, transparent)}
+.band{--bg:var(--red-a)} .band.alt{--bg:var(--red-b)}
+.hero.band{padding-top:var(--s-7)}
 .band .ring{stroke:var(--bg)}
-.tone-hope .chap-num,.tone-hope2 .chap-num{color:var(--hope)}
-/* el inicio, sobre rojo */
-.tone-hero{--bg:var(--t-hero);--ink:#FFF6F0;--ink-2:#FFE6DE;--muted:#FFD3C8;--accent:#FFF6F0;padding-top:var(--s-7);color:var(--ink)}
-.tone-hero .phone{--ink:#1D1B18;--muted:#6A645C;--accent:#C8281E;--paper:#F7F5F2;color:var(--ink);border-color:transparent;box-shadow:0 32px 64px -32px rgba(60,6,2,.55)}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tone-hero .phone{--ink:#F1EEE9;--muted:#A49E95;--accent:#FF5E52;--paper:#161513}}
-:root[data-theme="dark"] .tone-hero .phone{--ink:#F1EEE9;--muted:#A49E95;--accent:#FF5E52;--paper:#161513}
-.tone-hero .phone .btn{background:#C8281E;color:#fff}
-@media (hover:hover) and (pointer:fine){.tone-hero .phone .btn:hover{background:#A91F16}}
-.tone-hero :focus-visible{outline-color:#FFF6F0}
-.tone-hero .phone :focus-visible{outline-color:#C8281E}
-.tone-hero .reveal .verdict{color:#FFF6F0}
+.hope .chap-num{color:var(--hope)}
+
+/* ajustes de piezas sobre rojo */
+.split .term.bad{color:var(--accent)}
+.vx circle{fill:rgba(255,255,255,.1);stroke:var(--ink)}
+.vx.on circle{fill:var(--accent);stroke:var(--accent)}
+.vx.on text{fill:#1D1B18}
+@media (hover:hover) and (pointer:fine){.vx:not(.on):hover circle{fill:rgba(255,255,255,.22)}}
+.below{fill:rgba(0,0,0,.14);opacity:1}
+.ring.r0,.ring.r1,.ring.r2,.ring.r3{fill:#1D1B18}
+.ring.r0{opacity:.10}.ring.r1{opacity:.2}.ring.r2{opacity:.32}.ring.r3{opacity:.48}
+.ring.on{opacity:.85}
+.lamp{background:#1D1B18}
+.lamp i{background:#fff}
+.seg button[aria-pressed="true"]{color:var(--red-a)}
+.btn{color:var(--red-a)}
+.phone .btn,.game .btn{background:var(--accent);color:#fff}
+@media (hover:hover) and (pointer:fine){.phone .btn:hover,.game .btn:hover{background:color-mix(in oklab, var(--accent) 86%, #000)}}
+.game .btn.line{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.share{background:#1D1B18;color:#F7F5F2}
+.share textarea{background:#F7F5F2;color:#1D1B18}
+.share .btn{background:var(--hope-fill);color:#1D1B18}
+.check input{accent-color:#1D1B18}
+.hope .pledge[aria-pressed="true"]{border-color:var(--hope);background:var(--hope-soft)}
 </style>
 </head>
 <body>
 
 <main class="wrap">
 
-<section class="hero band tone-hero" data-label="El chat">
+<section class="hero band" data-label="El chat">
   <p class="label">Educación para la Paz · UNIMET · 10 minutos</p>
   <h1 id="title"><span><span id="titleText">¿Esto es amor?</span><span class="caret"></span></span><span class="edited" id="edited" hidden>editado</span></h1>
   <p class="lead">Te acaba de llegar este chat. Ábrelo mensaje por mensaje y fíjate cuáles te parecen normales.</p>
@@ -337,7 +367,7 @@ footer .label{color:var(--ink);margin-top:var(--s-2)}
   </div>
 </section>
 
-<section class="chap band tone-rose" data-label="1 de 8: Agresividad y violencia">
+<section class="chap band alt" data-label="1 de 8: Agresividad y violencia">
   <div class="chap-head"><span class="chap-num">Capítulo 1 de 8</span><h2>Agresividad y violencia</h2></div>
   <p>Solemos usarlas como sinónimos, pero la psicología las separa. Y esa diferencia es la que hace que la violencia se pueda prevenir.</p>
   <div class="split">
@@ -351,7 +381,7 @@ footer .label{color:var(--ink);margin-top:var(--s-2)}
   <p class="think"><b>Piénsalo</b>Si la violencia se aprende, ¿dónde aprendimos que revisarle el teléfono a alguien es una forma de cuidarlo?</p>
 </section>
 
-<section class="chap band tone-sand" data-label="2 de 8: El triángulo de Galtung">
+<section class="chap band" data-label="2 de 8: El triángulo de Galtung">
   <div class="chap-head"><span class="chap-num">Capítulo 2 de 8</span><h2>Lo que se ve y lo que la sostiene</h2></div>
   <p>Johan Galtung (1930-2024), sociólogo noruego y pionero de los estudios de paz, dibujó la violencia como un triángulo. Arriba está la que se ve. Abajo, dos formas que casi nunca notamos y que la mantienen viva. Toca cada punta.</p>
   <div class="diagram">
@@ -370,7 +400,7 @@ footer .label{color:var(--ink);margin-top:var(--s-2)}
   <p class="think"><b>Piénsalo</b>En el chat de Dani, ¿cuál era la parte directa? ¿Y qué idea cultural la hacía ver romántica?</p>
 </section>
 
-<section class="chap band tone-paper" data-label="3 de 8: Formas de violencia">
+<section class="chap band alt" data-label="3 de 8: Formas de violencia">
   <div class="chap-head"><span class="chap-num">Capítulo 3 de 8</span><h2>Las formas que toma</h2></div>
   <p class="aside">La OMS divide la violencia en autoinfligida, interpersonal y colectiva. Aquí nos quedamos con la interpersonal, la que pasa entre parejas, amigos y compañeros.</p>
   <div class="forms">
@@ -382,7 +412,7 @@ footer .label{color:var(--ink);margin-top:var(--s-2)}
   </div>
 </section>
 
-<section class="chap band tone-sage" data-label="4 de 8: ¿Es violencia?">
+<section class="chap band" data-label="4 de 8: ¿Es violencia?">
   <div class="chap-head"><span class="chap-num">Capítulo 4 de 8</span><h2>¿Es violencia o no?</h2></div>
   <p>Diez situaciones que pasan en cualquier universidad. Contesta rápido, sin pensarlo mucho, y después lee por qué.</p>
   <div class="game" id="game">
@@ -395,7 +425,7 @@ footer .label{color:var(--ink);margin-top:var(--s-2)}
   </div>
 </section>
 
-<section class="chap band tone-sky" data-label="5 de 8: El ciclo">
+<section class="chap band alt" data-label="5 de 8: El ciclo">
   <div class="chap-head"><span class="chap-num">Capítulo 5 de 8</span><h2>¿Por qué no se va y ya?</h2></div>
   <p>La psicóloga Lenore Walker entrevistó a más de cien mujeres para su libro de 1979 y encontró que la violencia en pareja se repite en un ciclo de tres fases. Mira qué pasa con el tiempo.</p>
   <div class="seg" role="group" aria-label="Momento de la relación">
@@ -421,7 +451,7 @@ footer .label{color:var(--ink);margin-top:var(--s-2)}
   <p class="think"><b>Piénsalo</b>¿Te acuerdas del último mensaje de Dani, “perdón amor, es que te amo demasiado”? Esa era la luna de miel.</p>
 </section>
 
-<section class="chap band tone-rose" data-label="6 de 8: Causas y consecuencias">
+<section class="chap band" data-label="6 de 8: Causas y consecuencias">
   <div class="chap-head"><span class="chap-num">Capítulo 6 de 8</span><h2>De dónde viene y qué deja</h2></div>
   <p>La OMS usa un modelo ecológico: la violencia sale de varios factores que se suman, desde la persona hasta la sociedad entera. Toca cada círculo.</p>
   <div class="eco">
@@ -443,7 +473,7 @@ footer .label{color:var(--ink);margin-top:var(--s-2)}
   </div>
 </section>
 
-<section class="chap band tone-sand" data-label="7 de 8: Voces">
+<section class="chap band alt" data-label="7 de 8: Voces">
   <div class="chap-head"><span class="chap-num">Capítulo 7 de 8</span><h2>Gente que ya nos dejó pistas</h2></div>
   <p>Ninguno de ellos habló de noviazgos universitarios, pero lo que defendieron aplica aquí mismo.</p>
   <div class="voices">
@@ -468,7 +498,7 @@ footer .label{color:var(--ink);margin-top:var(--s-2)}
   </div>
 </section>
 
-<section class="chap hope band tone-hope" data-label="8 de 8: Prevenir y actuar">
+<section class="chap hope band" data-label="8 de 8: Prevenir y actuar">
   <div class="chap-head"><span class="chap-num">Capítulo 8 de 8</span><h2>Qué hacer</h2></div>
   <p class="hope-intro">Ya viste las señales. Ahora, lo que sí puedes hacer.</p>
   <div class="two">
@@ -486,7 +516,7 @@ footer .label{color:var(--ink);margin-top:var(--s-2)}
   <p class="aside">En Venezuela, la Ley Orgánica sobre el Derecho de las Mujeres a una Vida Libre de Violencia castiga la violencia psicológica y el acoso contra la mujer como delitos, además de la física.</p>
 </section>
 
-<section class="chap hope band tone-hope2" data-label="Para cerrar">
+<section class="chap hope band alt" data-label="Para cerrar">
   <div class="chap-head"><span class="chap-num">Para cerrar</span><h2>Tu semáforo</h2></div>
   <p>Esto queda solo en tu teléfono. Marca lo que te haya pasado en alguna relación, de pareja o de amistad, en el último año.</p>
   <div class="check">
