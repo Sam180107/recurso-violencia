@@ -1,306 +1,148 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" data-type="service" data-radius="soft" data-buttons="pill" data-motion>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>¿Esto es amor?</title>
 <meta name="description" content="Un recorrido de 10 minutos para reconocer la violencia psicológica que normalizamos en las relaciones. Educación para la Paz, UNIMET.">
+<meta name="page-type" content="service">
+<meta name="site-kind" content="other">
 <meta property="og:title" content="¿Esto es amor?">
 <meta property="og:description" content="Lee el chat de Dani y descubre cuántas señales de violencia se te pasaron.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Hanken+Grotesk:wght@400;500&display=swap">
 <style>
-/* Concepto: la página se lee como una conversación de madrugada que alguien revisó con resaltador.
-   Sistema único (taste skill): tinta casi negra cálida, un solo acento rojo para las señales de violencia,
-   naranja solo en la parte final (esperanza), titulares en Newsreader 400 y texto en Hanken Grotesk.
-   Escala de espacios 4/8/12/16/24/32/48/64/96 y radios 8/12/20. */
+/* Sistema según tasteskill 2.5 (kind: service / other), con una excepción pedida por la autora:
+   el rojo de marca cubre toda la página en dos tonos alternados en vez de fondos neutros.
+   Rejilla de 12 columnas en un .wrap de 1280px, línea de división en la columna 7,
+   cada sección del alto de una pantalla en escritorio, h2 arriba a la izquierda,
+   texto a la izquierda y visual a la derecha en todas las divisiones. Sin animaciones al hacer scroll. */
 :root{
-  --paper:#F7F5F2; --surface:#FFFFFF; --ink:#1D1B18; --ink-2:#3D3934; --muted:#6A645C; --line:#DFDBD5;
-  --accent:#C8281E; --accent-hl:rgba(234,64,48,.22); --accent-soft:#FBE7E3;
-  --hope:#B14C08; --hope-fill:#F47A1F; --hope-soft:#FFEBDA;
-  --warn:#B07114; --ok:#2C7A57; --off:#B5AFA6;
-  --bubble-them:#ECE9E4; --bubble-me:#1D1B18; --bubble-me-ink:#F7F5F2;
+  --red-a:#C8281E; --red-b:#B5221A; --dark:#1D1B18;
+  --ink:#FFF6F0; --ink-2:#FFE6DE; --muted:#FFD3C8; --line:rgba(255,246,240,.26);
+  --surface:rgba(255,255,255,.10); --surface-2:rgba(255,255,255,.18);
+  --accent:#FFE08A; --accent-hl:rgba(255,224,138,.35);
+  --hope:#FFC48A; --hope-fill:#FFB15C; --hope-soft:rgba(255,177,92,.22);
+  --warn:#FFB35C; --ok:#B8F5CF; --off:rgba(255,246,240,.5);
   --display:"Newsreader", Georgia, "Times New Roman", serif;
   --body:"Hanken Grotesk", "Segoe UI", system-ui, sans-serif;
-  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:24px; --s-6:32px; --s-7:48px; --s-8:64px; --s-9:96px;
-  --r-sm:8px; --r-md:12px; --r-lg:20px;
+  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:24px; --s-6:32px; --s-7:48px; --s-8:64px; --s-9:96px; --s-10:128px;
+  --r-sm:8px; --r-md:12px; --r-lg:20px; --r-btn:999px;
+  --nav:72px; --padt:120px; --padb:72px; --gut:80px; --hgap:48px; --hpadb:64px;
+  --t-h1:clamp(3.4rem, 2.2rem + 4.2vw, 6.25rem); --t-h2:clamp(1.875rem, 1.2rem + 1.9vw, 3rem); --t-h3:clamp(1.5rem, 1.35rem + .4vw, 1.75rem);
+  --t-lead:clamp(1.125rem, 1.07rem + .2vw, 1.25rem); --t-body:1rem; --t-small:.875rem; --t-label:.8125rem;
   --m-in:140ms; --m-out:200ms; --m-press:90ms; --m-ease:cubic-bezier(.2,.8,.2,1);
   color-scheme:light;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --paper:#161513; --surface:#201E1B; --ink:#F1EEE9; --ink-2:#D6D1CA; --muted:#A49E95; --line:#36322D;
-  --accent:#FF5E52; --accent-hl:rgba(255,94,82,.28); --accent-soft:#3A1D1A;
-  --hope:#FF9A4D; --hope-fill:#FF8A33; --hope-soft:#3A2617;
-  --warn:#E8A93F; --ok:#5FCB97; --off:#7E786F;
-  --bubble-them:#2B2925; --bubble-me:#F1EEE9; --bubble-me-ink:#161513; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --paper:#161513; --surface:#201E1B; --ink:#F1EEE9; --ink-2:#D6D1CA; --muted:#A49E95; --line:#36322D;
-  --accent:#FF5E52; --accent-hl:rgba(255,94,82,.28); --accent-soft:#3A1D1A;
-  --hope:#FF9A4D; --hope-fill:#FF8A33; --hope-soft:#3A2617;
-  --warn:#E8A93F; --ok:#5FCB97; --off:#7E786F;
-  --bubble-them:#2B2925; --bubble-me:#F1EEE9; --bubble-me-ink:#161513; color-scheme:dark}
+@media (max-width:1023px){:root{--gut:48px}}
+@media (max-width:639px){:root{--nav:56px; --padt:96px; --padb:48px; --gut:24px; --hgap:40px; --hpadb:24px}}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--red-a:#9E1D15; --red-b:#8A1811; --dark:#141210; color-scheme:dark}}
+:root[data-theme="dark"]{--red-a:#9E1D15; --red-b:#8A1811; --dark:#141210; color-scheme:dark}
 
 *{box-sizing:border-box}
-html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.6;
-  -webkit-font-smoothing:antialiased;
-  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
-img{max-width:100%}
+html,body{margin:0}
+html{scroll-padding-top:0;scroll-behavior:auto}
+body{background:var(--red-a);color:var(--ink);font-family:var(--body);font-size:var(--t-body);line-height:1.6;-webkit-font-smoothing:antialiased}
 [hidden]{display:none!important}
 h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;font-optical-sizing:auto}
 p{margin:0;text-wrap:pretty}
-a{color:var(--ink);text-decoration-color:var(--line);text-underline-offset:3px;transition:text-decoration-color var(--m-out) ease}
-@media (hover:hover) and (pointer:fine){a:hover{text-decoration-color:var(--ink);transition-duration:var(--m-in)}}
+ul{margin:0}
 button{font:inherit;color:inherit;cursor:pointer}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px;animation:ring 200ms var(--m-ease)}
+.wrap{width:min(100% - 2 * var(--gut), 1280px);margin-inline:auto}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--s-5)}
+.c-l5{grid-column:1 / span 5} .c-l6{grid-column:1 / span 6} .c-r6{grid-column:7 / span 6} .c-4{grid-column:span 4} .c-12{grid-column:1 / -1}
+@media (max-width:1023px){.grid{gap:var(--s-5)}.c-l5,.c-l6,.c-r6,.c-4{grid-column:1 / -1}}
+@media (min-width:640px) and (max-width:1023px){.grid.two-up > .c-4{grid-column:span 6}}
+@media (max-width:639px){.grid{gap:var(--s-3)}}
+.measure{max-width:36em}
+.label{font-size:var(--t-label);font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums}
+.lead{font-size:var(--t-lead);line-height:1.5;color:var(--ink-2)}
+
+/* foco y enlaces: una sola línea, que se dibuja de izquierda a derecha */
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px;animation:ring var(--m-out) var(--m-ease)}
 @keyframes ring{from{outline-offset:6px}}
+.link{color:inherit;text-decoration:none;background:linear-gradient(currentColor,currentColor) 0 100% / 0 1px no-repeat, linear-gradient(var(--line),var(--line)) 0 100% / 100% 1px no-repeat;transition:background-size var(--m-out) var(--m-ease)}
+@media (hover:hover) and (pointer:fine){.link:hover{background-size:100% 1px,100% 1px;transition-duration:var(--m-in)}}
 
-.wrap{max-width:660px;margin:0 auto;padding-block:var(--s-6) var(--s-8);display:flex;flex-direction:column;gap:var(--s-9)}
-@media (max-width:640px){.wrap{gap:var(--s-8);padding-top:var(--s-5)}}
-.chap > p,.lead,.reveal p,.aside{max-width:34em}
-.aside{font-size:1rem;color:var(--ink-2)}
-.label{font-size:.875rem;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums}
-
-/* botones: un solo par (primario relleno, secundario de contorno) */
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;border:0;border-radius:999px;padding:0 var(--s-5);
-  background:var(--ink);color:var(--paper);font-family:var(--body);font-weight:500;font-size:1rem;line-height:1.2;
+/* botones: un par */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--s-2);min-height:44px;border:0;border-radius:var(--r-btn);padding:0 var(--s-5);
+  background:var(--ink);color:var(--red-a);font-family:var(--body);font-weight:500;font-size:1rem;line-height:1.2;text-decoration:none;white-space:nowrap;
   transition:transform var(--m-out) var(--m-ease),background-color var(--m-out) ease,box-shadow var(--m-out) ease;-webkit-tap-highlight-color:transparent}
-.btn.line{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.btn--secondary{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
 @media (hover:hover) and (pointer:fine){
-  .btn:hover{transform:translateY(-1px);background:color-mix(in oklab, var(--ink) 86%, var(--paper));transition-duration:var(--m-in)}
-  .btn.line:hover{background:color-mix(in oklab, var(--ink) 6%, transparent)}
+  .btn:hover{transform:translateY(-1px);background:color-mix(in oklab, var(--ink) 86%, var(--red-a));transition-duration:var(--m-in)}
+  .btn--secondary:hover{background:color-mix(in oklab, var(--ink) 10%, transparent)}
 }
 .btn:active{transform:translateY(1px) scale(.985);transition-duration:var(--m-press)}
-.opt,.pledge,.seg button,.legend button{transition:transform var(--m-out) var(--m-ease),background-color var(--m-out) ease,border-color var(--m-out) ease,color var(--m-out) ease;-webkit-tap-highlight-color:transparent}
-.opt:active:not([disabled]),.pledge:active,.seg button:active{transform:translateY(1px) scale(.985);transition-duration:var(--m-press)}
+.btn .m-arrow{width:14px;height:14px;transition:transform var(--m-out) var(--m-ease)}
+@media (hover:hover) and (pointer:fine){.btn:hover .m-arrow{transform:translateX(3px);transition-duration:var(--m-in)}}
+@media (max-width:639px){.btn-row .btn,.btn--block{width:100%}}
 
-/* hero */
-.hero{display:flex;flex-direction:column;gap:var(--s-5)}
-h1{font-size:clamp(3.4rem, 15vw, 6.6rem);line-height:.95;letter-spacing:-.028em;min-height:1.95em;display:flex;flex-direction:column;justify-content:flex-end}
+/* navegación fija */
+.nav{position:fixed;inset:0 0 auto;z-index:10;height:var(--nav);background:var(--red-a);border-bottom:1px solid var(--line)}
+.nav .wrap{height:100%;display:flex;align-items:center;justify-content:space-between;gap:var(--s-5)}
+.skip{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.skip:focus{position:fixed;top:8px;left:8px;width:auto;height:auto;clip-path:none;background:var(--ink);color:var(--red-a);padding:8px 12px;border-radius:8px;z-index:20}
+.brand{font-family:var(--display);font-size:1.25rem;color:var(--ink);text-decoration:none;letter-spacing:-.01em;white-space:nowrap}
+.nav-words{display:flex;gap:var(--s-6);list-style:none;padding:0;margin:0}
+.nav-words a{font-size:.9375rem;font-weight:500;color:var(--ink-2);text-decoration:none;white-space:nowrap;padding-bottom:4px;
+  background:linear-gradient(var(--ink),var(--ink)) 0 100% / 0 1px no-repeat;transition:background-size var(--m-out) var(--m-ease),color var(--m-out) ease}
+@media (hover:hover) and (pointer:fine){.nav-words a:hover{color:var(--ink);background-size:100% 1px;transition-duration:var(--m-in)}}
+.nav-end{display:flex;gap:var(--s-3);align-items:center}
+.menu-btn{display:none;width:44px;height:44px;padding:0;border-radius:var(--r-btn)}
+.menu-btn svg{width:20px;height:20px}
+@media (max-width:1023px){.nav-words{display:none}.menu-btn{display:inline-flex}}
+@media (max-width:639px){.nav-end .btn--nav{display:none}}
+.sheet{position:fixed;inset:var(--nav) 0 0;z-index:9;background:var(--red-a);padding:var(--s-5) 0;opacity:0;transition:opacity var(--m-out) ease}
+.sheet.open{opacity:1}
+.sheet ul{list-style:none;padding:0;margin:0}
+.sheet a{display:flex;align-items:center;height:56px;border-bottom:1px solid var(--line);font-family:var(--display);font-size:1.5rem;color:var(--ink);text-decoration:none}
+
+/* secciones: una por pantalla en escritorio */
+main > section,footer.closing{position:relative;padding:var(--padt) 0 var(--padb)}
+main > section:nth-of-type(even){background:var(--red-b)}
+@media (min-width:1024px) and (min-height:700px){
+  main > section,footer.closing{min-height:calc(var(--h,1) * 100svh)}
+}
+.head{display:flex;flex-direction:column;gap:var(--s-3);margin-bottom:var(--s-7);max-width:44em}
+@media (max-width:639px){.head{margin-bottom:var(--s-6)}}
+h2{font-size:var(--t-h2);line-height:1.05;letter-spacing:-.022em}
+h3{font-size:var(--t-h3);line-height:1.2;letter-spacing:-.012em}
+.head p:not(.label){font-size:var(--t-lead);line-height:1.5;color:var(--ink-2);max-width:36em}
+.stack{display:flex;flex-direction:column;gap:var(--s-4);min-width:0}
+.stack p,.stack li{max-width:36em}
+
+/* tarjeta única: panel translúcido, sin enlace (no se levanta) */
+.card{background:var(--surface);border-radius:var(--r-lg);padding:var(--s-5);display:flex;flex-direction:column;gap:var(--s-2);min-width:0}
+.card > .label{margin-bottom:0}
+.card .label{margin-bottom:var(--s-1)}
+
+/* ---------- hero ---------- */
+.hero{padding-top:calc(var(--nav) + var(--hgap));padding-bottom:var(--hpadb)}
+@media (min-width:1024px) and (min-height:700px){.hero{height:100svh;min-height:0}}
+.hero .grid{align-items:start;height:100%}
+.hero-text{display:flex;flex-direction:column;gap:var(--s-5);padding-top:var(--s-2)}
+.notice{font-size:var(--t-small);font-weight:500;color:var(--muted)}
+h1{font-size:var(--t-h1);line-height:.95;letter-spacing:-.03em;min-height:1.9em;display:flex;flex-direction:column;justify-content:flex-end}
 h1 .caret{display:inline-block;width:.045em;height:.78em;background:var(--accent);margin-left:.05em;vertical-align:-.06em;opacity:0}
 h1.typing .caret{opacity:1}
-h1 .edited{font-family:var(--body);font-size:.875rem;font-weight:500;color:var(--muted);letter-spacing:0;margin-top:var(--s-3)}
-.lead{font-size:1.25rem;line-height:1.5;color:var(--ink-2)}
+h1 .edited{font-family:var(--body);font-size:var(--t-label);font-weight:500;color:var(--muted);letter-spacing:0;margin-top:var(--s-3)}
+.hero .lead{max-width:30em}
+.stack ul.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s-5);margin-top:var(--s-3);padding:0;list-style:none}
+.facts b{display:block;font-family:var(--display);font-weight:400;font-size:2.25rem;line-height:1;letter-spacing:-.02em;font-variant-numeric:lining-nums}
+.facts span{font-size:var(--t-label);font-weight:500;color:var(--muted)}
+.verdict{display:flex;flex-direction:column;gap:var(--s-3)}
+.verdict p{font-size:var(--t-lead);line-height:1.5;color:var(--ink-2);max-width:30em}
+.verdict .flag{font-family:var(--display);font-style:italic;font-size:var(--t-h3);line-height:1.2;color:var(--ink)}
+.reveal-in{animation:swap 200ms var(--m-ease)}
+@keyframes swap{from{opacity:0;transform:translateY(6px)}}
 
-.phone{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);max-width:430px;width:100%;overflow:hidden;box-shadow:0 1px 0 var(--line),0 24px 48px -32px rgba(29,27,24,.25)}
-.phone-head{display:flex;align-items:center;gap:var(--s-3);padding:var(--s-3) var(--s-4);border-bottom:1px solid var(--line)}
-.avatar{width:40px;height:40px;border-radius:50%;background:var(--bubble-them);color:var(--ink);display:grid;place-items:center;font-family:var(--display);font-size:1.25rem}
-.who b{font-weight:500;font-size:1rem;display:block;line-height:1.25}
-.who span{font-size:.8125rem;color:var(--muted)}
-.chat{display:flex;flex-direction:column;gap:6px;padding:var(--s-4) var(--s-3);min-height:300px}
-.stamp{align-self:center;font-size:.8125rem;font-weight:500;color:var(--muted);padding:2px 10px;border-radius:999px;background:var(--paper);margin-block:6px}
-.msg{max-width:84%;padding:9px 13px;border-radius:18px;font-size:1rem;line-height:1.4}
-.msg.them{background:var(--bubble-them);align-self:flex-start;border-bottom-left-radius:6px}
-.msg.me{background:var(--bubble-me);color:var(--bubble-me-ink);align-self:flex-end;border-bottom-right-radius:6px}
-.msg.in{animation:pop 240ms var(--m-ease)}
-.msg mark{background:linear-gradient(transparent 12%, var(--accent-hl) 12%, var(--accent-hl) 88%, transparent 88%);color:inherit;padding:0 2px;border-radius:2px}
-.note{display:block;font-size:.8125rem;font-weight:500;color:var(--accent);margin-top:var(--s-1)}
-.typing-dots{align-self:flex-start;background:var(--bubble-them);border-radius:18px;padding:12px 14px;display:flex;gap:4px}
-.typing-dots i{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:dot 1s infinite}
-.typing-dots i:nth-child(2){animation-delay:.15s}.typing-dots i:nth-child(3){animation-delay:.3s}
-@keyframes dot{0%,60%,100%{opacity:.3}30%{opacity:1}}
-@keyframes pop{from{transform:translateY(6px) scale(.98);opacity:0}to{transform:none;opacity:1}}
-.msg.them.in{transform-origin:left bottom}.msg.me.in{transform-origin:right bottom}
-.phone-foot{display:flex;gap:var(--s-2);flex-wrap:wrap;padding:0 var(--s-3) var(--s-4)}
-@media (max-width:640px){.phone-foot .btn{width:100%}}
-.reveal{display:flex;flex-direction:column;gap:var(--s-3)}
-.reveal .poster{margin:var(--s-2) 0 0;font-family:var(--display);font-style:italic;font-size:clamp(2.6rem, 11vw, 4.6rem);line-height:1;letter-spacing:-.02em;text-wrap:balance}
-.reveal .verdict{font-family:var(--display);font-size:1.75rem;line-height:1.2;letter-spacing:-.01em;margin-top:var(--s-3)}
-
-/* capítulos */
-.chap{display:flex;flex-direction:column;gap:var(--s-5)}
-.chap-head{display:flex;flex-direction:column;gap:var(--s-2);margin-bottom:var(--s-2)}
-.chap-num{font-size:.875rem;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums}
-h2{font-size:clamp(2.1rem, 7vw, 3rem);line-height:1.04;letter-spacing:-.022em}
-h3{font-size:1.5rem;line-height:1.2;letter-spacing:-.01em}
-.think{align-self:flex-start;max-width:34em;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg) var(--r-lg) var(--r-lg) 6px;padding:var(--s-4) var(--s-5)}
-.think b{display:block;font-size:.8125rem;font-weight:500;color:var(--muted);margin-bottom:var(--s-1)}
-
-/* 1. comparación */
-.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border-top:1px solid var(--ink)}
-.split > div{padding:var(--s-4) 0 0;display:flex;flex-direction:column;gap:var(--s-2);min-width:0}
-.split > div:first-child{padding-right:var(--s-5);border-right:1px solid var(--line)}
-.split > div:last-child{padding-left:var(--s-5)}
-.split .term{font-family:var(--display);font-size:2rem;line-height:1.05;letter-spacing:-.02em}
-.split .term.bad{color:var(--accent)}
-.split p,.split ul{font-size:1rem}
-.split ul{margin:0;padding-left:18px}
-@media (max-width:520px){.split{grid-template-columns:1fr}.split > div:first-child{padding-right:0;border-right:0;padding-bottom:var(--s-5);border-bottom:1px solid var(--line)}.split > div:last-child{padding-left:0}}
-
-/* 2. triángulo */
-.diagram{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s-5);align-items:center}
-@media (max-width:580px){.diagram{grid-template-columns:1fr}}
-.diagram svg{width:100%;max-width:330px;height:auto;display:block;margin-inline:auto}
-.vx{cursor:pointer}
-.vx circle{fill:var(--surface);stroke:var(--ink);stroke-width:1.5;transition:fill var(--m-out) ease,stroke var(--m-out) ease}
-.vx text{fill:var(--ink);font-family:var(--body);font-weight:500;font-size:14px;pointer-events:none}
-@media (hover:hover) and (pointer:fine){.vx:not(.on):hover circle{fill:var(--bubble-them)}}
-.vx.on circle{fill:var(--accent);stroke:var(--accent)}
-.vx.on text{fill:#fff}
-.tri-edge{fill:none;stroke:var(--line);stroke-width:2}
-.water{stroke:var(--accent);stroke-width:1;stroke-dasharray:4 4}
-.water-lbl{fill:var(--muted);font-family:var(--body);font-weight:500;font-size:13px}
-.below{fill:var(--bubble-them);opacity:.7}
-.detail{display:flex;flex-direction:column;gap:var(--s-2);min-width:0}
-.detail p{font-size:1rem}
-.detail .ex{border-top:1px solid var(--line);padding-top:var(--s-3)}
-.detail .ex b{font-weight:500}
-
-/* 3. formas */
-.forms{border-top:1px solid var(--ink)}
-.form-row{display:grid;grid-template-columns:140px minmax(0,1fr);gap:var(--s-4);padding:var(--s-4) 0;border-bottom:1px solid var(--line);align-items:baseline}
-.form-row b{font-family:var(--display);font-weight:400;font-size:1.375rem;letter-spacing:-.01em}
-.form-row span{font-size:1rem}
-@media (max-width:460px){.form-row{grid-template-columns:1fr;gap:var(--s-1)}}
-
-/* 4. juego */
-.game{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:var(--s-5);display:flex;flex-direction:column;gap:var(--s-4)}
-@media (max-width:640px){.game{padding:var(--s-4)}}
-.game-top{display:flex;justify-content:space-between;align-items:center;gap:var(--s-3);font-size:.875rem;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums}
-.pips{display:flex;gap:4px}
-.pips i{width:14px;height:4px;border-radius:2px;background:var(--line)}
-.pips i.r{background:var(--ok)} .pips i.w{background:var(--accent)} .pips i.now{background:var(--ink)}
-.card{position:relative;background:var(--paper);border:1.5px solid var(--line);border-radius:var(--r-md);padding:var(--s-5) var(--s-5) var(--s-4);touch-action:pan-y;user-select:none;cursor:grab;transition:transform 240ms var(--m-ease),border-color var(--m-out) ease;will-change:transform}
-.card.drag{transition:none;cursor:grabbing}
-.card.right{border-color:var(--ok)} .card.wrong{border-color:var(--accent)}
-.card .side{position:absolute;top:var(--s-3);font-size:.8125rem;font-weight:500;opacity:0}
-.card .side.l{left:var(--s-4);color:var(--ok)} .card .side.r{right:var(--s-4);color:var(--accent)}
-.case{font-family:var(--display);font-size:1.625rem;line-height:1.25;letter-spacing:-.01em;min-height:3.75em;padding-top:var(--s-3)}
-.swipe-hint{font-size:.875rem;color:var(--muted)}
-.opts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s-2)}
-.opt{min-height:48px;border:1.5px solid var(--line);background:var(--surface);border-radius:var(--r-sm);padding:var(--s-2);font-weight:500;font-size:1rem}
-@media (hover:hover) and (pointer:fine){
-  .opt:hover:not([disabled]){border-color:var(--ink);transform:translateY(-1px);transition-duration:var(--m-in)}
-  .pledge:hover:not([aria-pressed="true"]){border-color:var(--muted);transition-duration:var(--m-in)}
-  .legend button:hover b{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
-}
-.opt.right{border-color:var(--ok);color:var(--ok)}
-.opt.wrong{border-color:var(--accent);color:var(--accent)}
-.opt[disabled]{cursor:default}
-.fb{display:flex;flex-direction:column;gap:var(--s-2);border-top:1px solid var(--line);padding-top:var(--s-4)}
-.fb p{font-size:1rem}
-.fb .tag{font-size:.875rem;font-weight:500;color:var(--accent)}
-.fb .tag.ok{color:var(--ok)}
-.fb .btn{align-self:flex-start}
-#gNext{align-self:flex-start}
-@media (max-width:640px){#gNext,.fb .btn{align-self:stretch}}
-.review{margin:0;padding:0;list-style:none;display:flex;flex-direction:column}
-.review li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:var(--s-2);padding:10px 0;border-bottom:1px solid var(--line);font-size:1rem}
-.review .mk{font-weight:500}
-.review .mk.r{color:var(--ok)} .review .mk.w{color:var(--accent)}
-
-/* 5. ciclo */
-.cycle-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s-5);align-items:center}
-@media (max-width:580px){.cycle-wrap{grid-template-columns:1fr}}
-.cycle-wrap svg{width:100%;max-width:300px;height:auto;display:block;margin-inline:auto}
-.arc{fill:none;stroke-width:24;cursor:pointer}
-.arc.t{stroke:var(--warn)} .arc.e{stroke:var(--accent)} .arc.l{stroke:var(--off)}
-.arc.dim{opacity:.3}
-.arrowhead{fill:var(--ink)}
-.cyc-center{fill:var(--ink);font-family:var(--display);font-size:22px;letter-spacing:-.01em}
-.cyc-sub{fill:var(--muted);font-family:var(--body);font-weight:500;font-size:13px}
-.seg{display:inline-flex;border:1.5px solid var(--ink);border-radius:999px;padding:3px;gap:2px;align-self:flex-start}
-.seg button{min-height:38px;border:0;background:transparent;border-radius:999px;padding:0 var(--s-4);font-weight:500;font-size:.9375rem}
-@media (hover:hover) and (pointer:fine){.seg button[aria-pressed="false"]:hover{background:color-mix(in oklab, var(--ink) 7%, transparent);transition-duration:var(--m-in)}}
-.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
-.legend{display:flex;flex-direction:column;min-width:0;border-top:1px solid var(--line)}
-.legend button{display:grid;grid-template-columns:12px minmax(0,1fr);gap:var(--s-3);align-items:start;text-align:left;background:none;border:0;padding:var(--s-3) 0;border-bottom:1px solid var(--line)}
-.legend .sw{width:12px;height:12px;border-radius:3px;margin-top:7px}
-.sw.t{background:var(--warn)} .sw.e{background:var(--accent)} .sw.l{background:var(--off)}
-.legend b{font-weight:500;font-size:1rem;display:block}
-.legend span{font-size:1rem;color:var(--ink-2)}
-.legend button[aria-pressed="false"] > span{opacity:.62;transition:opacity var(--m-out) ease}
-.legend button[aria-pressed="true"] > span{opacity:1}
-
-/* 6. causas */
-.eco{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s-5);align-items:center}
-@media (max-width:580px){.eco{grid-template-columns:1fr}}
-.eco svg{width:100%;max-width:300px;height:auto;display:block;margin-inline:auto}
-.ring{cursor:pointer;stroke:var(--paper);stroke-width:3}
-.ring.r0{fill:var(--accent);opacity:.14}.ring.r1{fill:var(--accent);opacity:.26}.ring.r2{fill:var(--accent);opacity:.42}.ring.r3{fill:var(--accent);opacity:.64}
-.ring.on{opacity:1}
-.ring-lbl{fill:var(--ink);font-family:var(--body);font-weight:500;font-size:13px;pointer-events:none}
-.conseq{display:flex;flex-wrap:wrap;gap:var(--s-2)}
-.conseq span{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:1rem}
-
-/* 7. voces */
-.voices{display:flex;flex-direction:column;border-top:1px solid var(--ink)}
-.voice{padding:var(--s-5) 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:200px minmax(0,1fr);gap:var(--s-1) var(--s-5);align-items:baseline;min-width:0}
-.voice h3,.voice .yrs{grid-column:1}
-.voice > p{grid-column:2;grid-row:1 / span 2;font-size:1rem}
-.voice > p.here{grid-row:3;font-weight:500}
-@media (max-width:580px){.voice{display:flex;flex-direction:column;gap:var(--s-2)}}
-.voice h3{font-size:1.375rem}
-.voice .yrs{font-size:.8125rem;font-weight:500;color:var(--muted)}
-
-/* 8. prevenir */
-.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s-6)}
-@media (max-width:520px){.two{grid-template-columns:1fr;gap:var(--s-5)}}
-.two > div{display:flex;flex-direction:column;gap:var(--s-3);border-top:1px solid var(--ink);padding-top:var(--s-4);min-width:0}
-.two ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:var(--s-2);font-size:1rem}
-
-/* cierre */
-.check{display:flex;flex-direction:column;border-top:1px solid var(--line)}
-.check label{display:flex;gap:var(--s-3);align-items:flex-start;padding:var(--s-3) 0;border-bottom:1px solid var(--line);cursor:pointer;font-size:1rem}
-.check input{width:20px;height:20px;margin-top:3px;flex:none}
-.light{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--s-4);align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:var(--s-4) var(--s-5)}
-.light p{font-size:1rem}
-.lamp{display:flex;flex-direction:column;gap:6px;background:var(--ink);padding:7px;border-radius:999px}
-.lamp i{width:20px;height:20px;border-radius:50%;background:var(--off);opacity:.35}
-.light.r .lamp i:nth-child(1){background:#E5484D;opacity:1}
-.light.y .lamp i:nth-child(2){background:#F2B133;opacity:1}
-.light.g .lamp i:nth-child(3){background:#3DBE7E;opacity:1}
-.light p b{font-family:var(--display);font-weight:400;font-size:1.375rem;display:block;line-height:1.2}
-.pledges{display:flex;flex-direction:column;gap:var(--s-2)}
-.pledge{text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:var(--r-md);padding:var(--s-3) var(--s-4);font-size:1rem}
-.share{background:var(--ink);color:var(--paper);border-radius:var(--r-lg);padding:var(--s-6);display:flex;flex-direction:column;gap:var(--s-4)}
-@media (max-width:640px){.share{padding:var(--s-5)}}
-.share h3{font-size:1.75rem}
-.share p{font-size:1rem;opacity:.86}
-.share textarea{width:100%;min-height:104px;border:0;border-radius:var(--r-md);padding:var(--s-3) var(--s-4);font:inherit;font-size:1rem;background:var(--paper);color:var(--ink);resize:vertical}
-.share .btn{align-self:flex-start;background:var(--hope-fill);color:#1D1B18}
-@media (hover:hover) and (pointer:fine){.share .btn:hover{background:color-mix(in oklab, var(--hope-fill) 86%, #1D1B18)}}
-@media (max-width:640px){.share .btn{align-self:stretch}}
-.hope .two > div{border-top-color:var(--hope)}
-.hope .check input{accent-color:var(--hope-fill)}
-.hope .pledge[aria-pressed="true"]{border-color:var(--hope-fill);background:var(--hope-soft)}
-.hope-intro{font-family:var(--display);font-style:italic;font-size:1.5rem;line-height:1.3;color:var(--hope)}
-
-footer{border-top:1px solid var(--ink);padding-top:var(--s-5);display:flex;flex-direction:column;gap:var(--s-3);font-size:.875rem;color:var(--muted)}
-footer ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:2px}
-footer .label{color:var(--ink);margin-top:var(--s-2)}
-
-.reveal,.fb,.light p{transition:opacity 200ms var(--m-ease),transform 200ms var(--m-ease)}
-@starting-style{.reveal,.fb{opacity:0;transform:translateY(6px)}}
-.lamp i{transition:background-color 200ms ease,opacity 200ms ease}
-.arc,.ring{transition:opacity 200ms ease}
-@media (prefers-reduced-motion: reduce){
-  *{animation-duration:1ms!important;animation-iteration-count:1!important}
-  .reveal,.fb{transition:opacity 200ms ease}
-  @starting-style{.reveal,.fb{transform:none}}
-  .btn,.opt,.pledge,.seg button{transform:none!important}
-}
-
-/* ---------- color: toda la página en rojo; dos tonos alternados separan los capítulos ----------
-   El chat y el juego quedan como tarjetas claras encima, con su propio juego de tokens. */
-body,.on-red{
-  --red-a:#C8281E; --red-b:#B5221A;
-  --paper:var(--red-a); --surface:rgba(255,255,255,.10); --ink:#FFF6F0; --ink-2:#FFE6DE; --muted:#FFD3C8; --line:rgba(255,246,240,.28);
-  --accent:#FFE08A; --accent-hl:rgba(255,224,138,.35); --accent-soft:rgba(255,224,138,.18);
-  --hope:#FFC48A; --hope-fill:#FFB15C; --hope-soft:rgba(255,177,92,.22);
-  --warn:#FFB35C; --ok:#B8F5CF; --off:rgba(255,246,240,.5);
-  --bubble-them:rgba(255,255,255,.14);
-  background:var(--red-a); color:var(--ink);
-}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) body{--red-a:#9E1D15; --red-b:#8A1811}}
-:root[data-theme="dark"] body{--red-a:#9E1D15; --red-b:#8A1811}
-/* tarjetas claras: vuelven a los tokens neutros */
+/* teléfono: tarjeta clara con tokens propios */
 .phone,.game{
-  --paper:#F7F5F2; --surface:#FFFFFF; --ink:#1D1B18; --ink-2:#3D3934; --muted:#6A645C; --line:#DFDBD5;
-  --accent:#C8281E; --accent-hl:rgba(234,64,48,.22); --accent-soft:#FBE7E3;
-  --warn:#B07114; --ok:#2C7A57; --off:#B5AFA6; --bubble-them:#ECE9E4; --bubble-me:#1D1B18; --bubble-me-ink:#F7F5F2;
-  color:var(--ink); border-color:transparent; box-shadow:0 32px 64px -32px rgba(60,6,2,.55)}
+  --paper:#F7F5F2; --surface:#FFFFFF; --ink:#1D1B18; --ink-2:#3D3934; --muted:#6A645C; --line:#E2DED8;
+  --accent:#C8281E; --accent-hl:rgba(234,64,48,.22); --ok:#2C7A57; --bubble-them:#ECE9E4; --bubble-me:#1D1B18; --bubble-me-ink:#F7F5F2;
+  color:var(--ink);background:var(--surface);border-radius:var(--r-lg);box-shadow:0 32px 64px -32px rgba(60,6,2,.55)}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) :is(.phone,.game){
   --paper:#161513; --surface:#201E1B; --ink:#F1EEE9; --ink-2:#D6D1CA; --muted:#A49E95; --line:#36322D;
   --accent:#FF5E52; --accent-hl:rgba(255,94,82,.28); --ok:#5FCB97; --bubble-them:#2B2925; --bubble-me:#F1EEE9; --bubble-me-ink:#161513}}
@@ -308,259 +150,463 @@ body,.on-red{
   --paper:#161513; --surface:#201E1B; --ink:#F1EEE9; --ink-2:#D6D1CA; --muted:#A49E95; --line:#36322D;
   --accent:#FF5E52; --accent-hl:rgba(255,94,82,.28); --ok:#5FCB97; --bubble-them:#2B2925; --bubble-me:#F1EEE9; --bubble-me-ink:#161513}
 .phone :focus-visible,.game :focus-visible{outline-color:var(--accent)}
-
-.wrap{gap:0;padding-top:0}
-.band{position:relative;padding-block:var(--s-8);background:var(--bg);box-shadow:0 0 0 100vmax var(--bg);clip-path:inset(0 -100vmax)}
-@media (max-width:640px){.band{padding-block:var(--s-7)}}
-.band{--bg:var(--red-a)} .band.alt{--bg:var(--red-b)}
-.hero.band{padding-top:var(--s-7)}
-.band .ring{stroke:var(--bg)}
-.hope .chap-num{color:var(--hope)}
-
-/* ajustes de piezas sobre rojo */
-.split .term.bad{color:var(--accent)}
-.vx circle{fill:rgba(255,255,255,.1);stroke:var(--ink)}
-.vx.on circle{fill:var(--accent);stroke:var(--accent)}
-.vx.on text{fill:#1D1B18}
-@media (hover:hover) and (pointer:fine){.vx:not(.on):hover circle{fill:rgba(255,255,255,.22)}}
-.below{fill:rgba(0,0,0,.14);opacity:1}
-.ring.r0,.ring.r1,.ring.r2,.ring.r3{fill:#1D1B18}
-.ring.r0{opacity:.10}.ring.r1{opacity:.2}.ring.r2{opacity:.32}.ring.r3{opacity:.48}
-.ring.on{opacity:.85}
-.lamp{background:#1D1B18}
-.lamp i{background:#fff}
-.seg button[aria-pressed="true"]{color:var(--red-a)}
-.btn{color:var(--red-a)}
 .phone .btn,.game .btn{background:var(--accent);color:#fff}
 @media (hover:hover) and (pointer:fine){.phone .btn:hover,.game .btn:hover{background:color-mix(in oklab, var(--accent) 86%, #000)}}
-.game .btn.line{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
-.share{background:#1D1B18;color:#F7F5F2}
-.share textarea{background:#F7F5F2;color:#1D1B18}
+.game .btn--secondary{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+
+.phone{display:flex;flex-direction:column;overflow:hidden;width:100%;max-width:440px;justify-self:end}
+@media (min-width:1024px) and (min-height:700px){.phone{height:calc(100svh - var(--nav) - var(--hgap) - var(--hpadb))}}
+@media (max-width:1023px){.phone{justify-self:start;height:560px}}
+.phone-head{display:flex;align-items:center;gap:var(--s-3);padding:var(--s-3) var(--s-4);border-bottom:1px solid var(--line);flex:none}
+.avatar{width:40px;height:40px;border-radius:50%;background:var(--bubble-them);display:grid;place-items:center;font-family:var(--display);font-size:1.25rem}
+.who b{font-weight:500;display:block;line-height:1.25}
+.who span{font-size:var(--t-label);color:var(--muted)}
+.chat{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:6px;padding:var(--s-4) var(--s-3);overscroll-behavior:contain;scrollbar-width:thin}
+.chat > :first-child{margin-top:auto}
+.stamp{align-self:center;font-size:var(--t-label);font-weight:500;color:var(--muted);padding:2px 10px;border-radius:999px;background:var(--paper);margin-block:6px}
+.msg{max-width:84%;padding:9px 13px;border-radius:18px;line-height:1.4}
+.msg.them{background:var(--bubble-them);align-self:flex-start;border-bottom-left-radius:6px}
+.msg.me{background:var(--bubble-me);color:var(--bubble-me-ink);align-self:flex-end;border-bottom-right-radius:6px}
+.msg.in{animation:pop 240ms var(--m-ease)}
+.msg.them.in{transform-origin:left bottom}.msg.me.in{transform-origin:right bottom}
+@keyframes pop{from{transform:translateY(6px) scale(.98);opacity:0}}
+.msg mark{background:linear-gradient(transparent 12%, var(--accent-hl) 12%, var(--accent-hl) 88%, transparent 88%);color:inherit;padding:0 2px;border-radius:2px}
+.note{display:block;font-size:var(--t-label);font-weight:500;color:var(--accent);margin-top:var(--s-1)}
+.phone-foot{flex:none;padding:var(--s-3) var(--s-3) var(--s-4);border-top:1px solid var(--line)}
+.phone-foot .btn{width:100%}
+
+/* ---------- 1. agresividad y violencia ---------- */
+.term{font-family:var(--display);font-size:var(--t-h2);line-height:1;letter-spacing:-.022em}
+.term.bad{color:var(--accent)}
+.stack ul{padding-left:18px;display:flex;flex-direction:column;gap:var(--s-1)}
+.def{font-size:var(--t-lead);line-height:1.5}
+
+/* ---------- 2. triángulo / 6. modelo ecológico / 5. ciclo ---------- */
+.visual{display:grid;place-items:center;background:var(--surface);border-radius:var(--r-lg);padding:var(--s-6);min-height:440px}
+@media (max-width:639px){.visual{padding:var(--s-4);min-height:0}}
+.visual svg{width:100%;max-width:380px;height:auto;display:block}
+.vx{cursor:pointer}
+.vx circle{fill:var(--red-a);stroke:var(--ink);stroke-width:1.5;transition:fill var(--m-out) ease,stroke var(--m-out) ease}
+.vx text{fill:var(--ink);font-family:var(--body);font-weight:500;font-size:14px;pointer-events:none}
+@media (hover:hover) and (pointer:fine){.vx:not(.on):hover circle{fill:color-mix(in oklab, var(--red-a) 80%, #fff)}}
+.vx.on circle{fill:var(--accent);stroke:var(--accent)}
+.vx.on text{fill:#1D1B18}
+.tri-edge{fill:none;stroke:var(--line);stroke-width:2}
+.water{stroke:var(--accent);stroke-width:1;stroke-dasharray:4 4}
+.water-lbl{fill:var(--muted);font-family:var(--body);font-weight:500;font-size:13px}
+.below{fill:rgba(0,0,0,.14)}
+.detail{display:flex;flex-direction:column;gap:var(--s-2);min-height:168px}
+.detail p{max-width:36em}
+.detail .ex{padding-top:var(--s-3);color:var(--ink-2)}
+.detail .ex b{font-weight:500;color:var(--ink)}
+.picker{display:flex;flex-wrap:wrap;gap:var(--s-2)}
+.chip{min-height:40px;border:1.5px solid var(--line);background:transparent;border-radius:var(--r-btn);padding:0 var(--s-4);font-weight:500;font-size:.9375rem;
+  transition:transform var(--m-out) var(--m-ease),background-color var(--m-out) ease,border-color var(--m-out) ease,color var(--m-out) ease}
+@media (hover:hover) and (pointer:fine){.chip:hover:not([aria-pressed="true"]){border-color:var(--ink);transform:translateY(-1px);transition-duration:var(--m-in)}}
+.chip:active{transform:translateY(1px) scale(.985);transition-duration:var(--m-press)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--red-a)}
+
+.ring{cursor:pointer;stroke:var(--red-a);stroke-width:3;fill:#1D1B18;transition:opacity var(--m-out) ease}
+.ring.r0{opacity:.12}.ring.r1{opacity:.22}.ring.r2{opacity:.34}.ring.r3{opacity:.5}
+.ring.on{opacity:.88}
+.ring-lbl{fill:var(--ink);font-family:var(--body);font-weight:500;font-size:13px;pointer-events:none}
+.stack ul.conseq{display:flex;flex-direction:row;flex-wrap:wrap;gap:var(--s-2);list-style:none;padding:0}
+.conseq li{background:var(--surface);border-radius:var(--r-btn);padding:6px 14px}
+
+.arc{fill:none;stroke-width:24;cursor:pointer;transition:opacity var(--m-out) ease}
+.arc.t{stroke:var(--warn)} .arc.e{stroke:var(--accent)} .arc.l{stroke:var(--off)}
+.arc.dim{opacity:.3}
+.arrowhead{fill:var(--ink)}
+.cyc-center{fill:var(--ink);font-family:var(--display);font-size:22px;letter-spacing:-.01em}
+.cyc-sub{fill:var(--muted);font-family:var(--body);font-weight:500;font-size:13px}
+.legend{display:flex;flex-direction:column}
+.legend button{display:grid;grid-template-columns:12px minmax(0,1fr);gap:var(--s-3);align-items:start;text-align:left;background:none;border:0;padding:10px 0;border-bottom:1px solid var(--line);
+  transition:transform var(--m-out) var(--m-ease)}
+.legend button:last-child{border-bottom:0}
+.legend .sw{width:12px;height:12px;border-radius:3px;margin-top:7px}
+.sw.t{background:var(--warn)} .sw.e{background:var(--accent)} .sw.l{background:var(--off)}
+.legend b{font-weight:500;display:block}
+.legend span span{color:var(--ink-2)}
+.legend button[aria-pressed="false"] > span{opacity:.62;transition:opacity var(--m-out) ease}
+@media (hover:hover) and (pointer:fine){.legend button[aria-pressed="false"]:hover > span{opacity:.85}}
+
+/* ---------- 3. formas ---------- */
+.rows{list-style:none;padding:0}
+.rows li{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--s-5);padding:var(--s-4) 0;border-bottom:1px solid var(--line);align-items:baseline}
+.rows li:first-child{padding-top:0}
+.rows b{grid-column:1 / span 3;font-family:var(--display);font-weight:400;font-size:var(--t-h3);letter-spacing:-.01em;line-height:1.2}
+.rows span{grid-column:4 / span 7;font-size:var(--t-lead);line-height:1.5;color:var(--ink-2)}
+@media (max-width:639px){.rows li{display:flex;flex-direction:column;gap:var(--s-1)}.rows span{font-size:1rem}}
+
+/* ---------- 4. juego ---------- */
+.game{padding:var(--s-5);display:flex;flex-direction:column;gap:var(--s-3);min-height:500px}
+@media (max-width:639px){.game{padding:var(--s-4);min-height:0}}
+.game-top{display:flex;justify-content:space-between;align-items:center;gap:var(--s-3);font-size:var(--t-small);font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums}
+.pips{display:flex;gap:4px}
+.pips i{width:14px;height:4px;border-radius:2px;background:var(--line)}
+.pips i.r{background:var(--ok)} .pips i.w{background:var(--accent)} .pips i.now{background:var(--ink)}
+.case-card{position:relative;background:var(--paper);border:1.5px solid var(--line);border-radius:var(--r-md);padding:var(--s-6) var(--s-5) var(--s-4);touch-action:pan-y;user-select:none;cursor:grab;
+  transition:transform 240ms var(--m-ease),border-color var(--m-out) ease;will-change:transform}
+.case-card.drag{transition:none;cursor:grabbing}
+.case-card.right{border-color:var(--ok)} .case-card.wrong{border-color:var(--accent)}
+.case-card .side{position:absolute;top:var(--s-3);font-size:var(--t-label);font-weight:500;opacity:0}
+.case-card .side.l{left:var(--s-4);color:var(--ok)} .case-card .side.r{right:var(--s-4);color:var(--accent)}
+.case{font-family:var(--display);font-size:1.5rem;line-height:1.25;letter-spacing:-.01em;min-height:3.75em}
+.swipe-hint{font-size:var(--t-small);color:var(--muted)}
+.opts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s-2)}
+.opt{min-height:48px;border:1.5px solid var(--line);background:var(--surface);border-radius:var(--r-sm);padding:var(--s-2);font-weight:500;
+  transition:transform var(--m-out) var(--m-ease),border-color var(--m-out) ease,color var(--m-out) ease}
+@media (hover:hover) and (pointer:fine){.opt:hover:not([disabled]){border-color:var(--ink);transform:translateY(-1px);transition-duration:var(--m-in)}}
+.opt:active:not([disabled]){transform:translateY(1px) scale(.985);transition-duration:var(--m-press)}
+.opt.right{border-color:var(--ok);color:var(--ok)}
+.opt.wrong{border-color:var(--accent);color:var(--accent)}
+.opt[disabled]{cursor:default}
+.fb{display:flex;flex-direction:column;gap:var(--s-2);border-top:1px solid var(--line);padding-top:var(--s-4);animation:swap 200ms var(--m-ease)}
+.fb .tag{font-size:var(--t-small);font-weight:500;color:var(--accent)}
+.fb .tag.ok{color:var(--ok)}
+.fb .btn,#gNext{align-self:flex-start}
+@media (max-width:639px){.fb .btn,#gNext{align-self:stretch}}
+.review{padding:0;list-style:none;display:flex;flex-direction:column}
+.review li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:var(--s-2);padding:8px 0;border-bottom:1px solid var(--line);font-size:var(--t-small)}
+.review .mk{font-weight:500}
+.review .mk.r{color:var(--ok)} .review .mk.w{color:var(--accent)}
+.score{font-family:var(--display);font-size:var(--t-h2);line-height:1;letter-spacing:-.02em}
+
+/* ---------- 7. voces ---------- */
+.voice h3{font-size:1.5rem}
+.voice .yrs{font-size:var(--t-label);font-weight:500;color:var(--muted)}
+.voice p{color:var(--ink-2)}
+.voice .here{color:var(--ink);font-weight:500;margin-top:auto}
+
+/* ---------- 8. qué hacer ---------- */
+.hope-intro{font-family:var(--display);font-style:italic;font-size:var(--t-h3);line-height:1.3;color:var(--hope)}
+.do ul{padding-left:18px;display:flex;flex-direction:column;gap:var(--s-2);font-size:var(--t-lead);line-height:1.5}
+.law{margin-top:var(--s-6);color:var(--ink-2);max-width:44em}
+
+/* ---------- semáforo ---------- */
+.check{display:flex;flex-direction:column}
+.check label{display:flex;gap:var(--s-3);align-items:flex-start;padding:var(--s-3) 0;border-bottom:1px solid var(--line);cursor:pointer}
+.check input{width:20px;height:20px;margin-top:3px;flex:none;accent-color:#1D1B18}
+.light{flex-direction:row;align-items:center;gap:var(--s-4)}
+.lamp{display:flex;flex-direction:column;gap:6px;background:#1D1B18;padding:7px;border-radius:999px;flex:none}
+.lamp i{width:20px;height:20px;border-radius:50%;background:#fff;opacity:.25;transition:background-color var(--m-out) ease,opacity var(--m-out) ease}
+.light.r .lamp i:nth-child(1){background:#FF5A5F;opacity:1}
+.light.y .lamp i:nth-child(2){background:#F2B133;opacity:1}
+.light.g .lamp i:nth-child(3){background:#3DBE7E;opacity:1}
+.light b{font-family:var(--display);font-weight:400;font-size:1.5rem;display:block;line-height:1.2}
+.pledges{display:flex;flex-direction:column;gap:var(--s-2)}
+.pledge{text-align:left;background:var(--surface);border:1.5px solid transparent;border-radius:var(--r-md);padding:var(--s-3) var(--s-4);
+  transition:transform var(--m-out) var(--m-ease),background-color var(--m-out) ease,border-color var(--m-out) ease}
+@media (hover:hover) and (pointer:fine){.pledge:hover:not([aria-pressed="true"]){background:var(--surface-2);transform:translateY(-1px);transition-duration:var(--m-in)}}
+.pledge:active{transform:translateY(1px) scale(.985);transition-duration:var(--m-press)}
+.pledge[aria-pressed="true"]{border-color:var(--hope);background:var(--hope-soft)}
+
+/* ---------- cierre y pie: una sola sección en fondo oscuro ---------- */
+footer.closing{background:var(--dark);color:#F7F5F2;--ink:#F7F5F2;--ink-2:#D9D4CD;--muted:#ADA79F;--line:rgba(247,245,242,.18)}
+footer.closing > .wrap{display:flex;flex-direction:column;gap:var(--s-9);height:100%}
+.close h2{font-size:var(--t-h2)}
+.share textarea{width:100%;min-height:132px;border:0;border-radius:var(--r-md);padding:var(--s-4);font:inherit;background:#F7F5F2;color:#1D1B18;resize:vertical}
 .share .btn{background:var(--hope-fill);color:#1D1B18}
-.check input{accent-color:#1D1B18}
-.hope .pledge[aria-pressed="true"]{border-color:var(--hope);background:var(--hope-soft)}
+@media (hover:hover) and (pointer:fine){.share .btn:hover{background:color-mix(in oklab, var(--hope-fill) 86%, #000)}}
+.directory{font-size:var(--t-small);color:var(--muted)}
+.directory h3{font-family:var(--body);font-size:var(--t-label);font-weight:500;color:var(--ink);letter-spacing:0;margin-bottom:var(--s-3)}
+.directory ul{padding-left:18px;display:flex;flex-direction:column;gap:var(--s-1)}
+.legal{grid-column:1 / -1;padding-top:var(--s-5);border-top:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--s-3)}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:1ms!important;animation-iteration-count:1!important}
+  .link,.nav-words a{transition-property:opacity,color,background-color,border-color}
+  .btn,.opt,.pledge,.chip{transform:none!important}
+}
 </style>
 </head>
 <body>
 
-<main class="wrap">
+<header class="nav"><div class="wrap">
+  <a class="skip" href="#main">Saltar al contenido</a>
+  <a class="brand" href="#chat">¿Esto es amor?</a>
+  <ul class="nav-words">
+    <li><a href="#chat">Chat</a></li>
+    <li><a href="#galtung">Triángulo</a></li>
+    <li><a href="#ciclo">Ciclo</a></li>
+    <li><a href="#causas">Causas</a></li>
+    <li><a href="#ayuda">Ayuda</a></li>
+  </ul>
+  <div class="nav-end">
+    <a class="btn btn--secondary btn--nav" href="#juego">Jugar los 10 casos</a>
+    <button class="btn btn--secondary menu-btn" id="menuBtn" type="button" aria-label="Abrir el menú" aria-expanded="false" aria-controls="sheet">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3 6h14M3 10h14M3 14h14"/></svg>
+    </button>
+  </div>
+</div></header>
+<div class="sheet" id="sheet" hidden><div class="wrap"><ul>
+  <li><a href="#chat">Chat</a></li><li><a href="#agresividad">Agresividad</a></li><li><a href="#galtung">Triángulo</a></li>
+  <li><a href="#formas">Formas</a></li><li><a href="#juego">Juego</a></li><li><a href="#ciclo">Ciclo</a></li>
+  <li><a href="#causas">Causas</a></li><li><a href="#voces">Voces</a></li><li><a href="#ayuda">Ayuda</a></li><li><a href="#semaforo">Semáforo</a></li>
+</ul></div></div>
 
-<section class="hero band" data-label="El chat">
-  <p class="label">Educación para la Paz · UNIMET · 10 minutos</p>
-  <h1 id="title"><span><span id="titleText">¿Esto es amor?</span><span class="caret"></span></span><span class="edited" id="edited" hidden>editado</span></h1>
-  <p class="lead">Te acaba de llegar este chat. Ábrelo mensaje por mensaje y fíjate cuáles te parecen normales.</p>
+<main id="main">
 
-  <div class="phone" role="region" aria-label="Chat simulado con Dani">
+<section class="hero" id="chat" style="--h:1"><div class="wrap"><div class="grid">
+  <div class="hero-text c-l6">
+    <p class="notice">Educación para la Paz · UNIMET · 10 minutos</p>
+    <h1 id="title"><span><span id="titleText">¿Esto es amor?</span><span class="caret"></span></span><span class="edited" id="edited" hidden>editado</span></h1>
+    <div id="intro" class="stack">
+      <p class="lead">Un recorrido corto para reconocer la violencia psicológica en las relaciones universitarias. Empieza por el chat de Dani: ábrelo mensaje por mensaje y fíjate cuáles te parecen normales.</p>
+      <ul class="facts">
+        <li><b>9</b><span>mensajes en el chat</span></li>
+        <li><b>10</b><span>casos para jugar</span></li>
+        <li><b>8</b><span>capítulos cortos</span></li>
+      </ul>
+    </div>
+    <div class="verdict" id="reveal" hidden>
+      <p class="flag">Los siete mensajes de Dani son violencia psicológica.</p>
+      <p>Ninguno trae un golpe, y por eso pasan como celos o cariño: control del teléfono, vigilancia de la ubicación, culpa, aislamiento de los amigos, silencio como castigo y una disculpa que vuelve a empezar todo.</p>
+      <div class="btn-row"><a class="btn btn--secondary" href="#agresividad">Ver por qué es violencia <svg class="m-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4"/></svg></a></div>
+    </div>
+  </div>
+  <div class="phone c-r6" role="region" aria-label="Chat simulado con Dani">
     <div class="phone-head"><div class="avatar">D</div><div class="who"><b>Dani</b><span id="status">en línea</span></div></div>
-    <div class="chat" id="chat" aria-live="polite"><span class="stamp">Viernes, 7:42 p. m.</span></div>
+    <div class="chat" id="chat-log" aria-live="polite"><span class="stamp">Viernes, 7:42 p. m.</span></div>
     <div class="phone-foot">
       <button class="btn" id="nextMsg" type="button">Leer el siguiente mensaje</button>
       <button class="btn" id="markBtn" type="button" hidden>Resaltar las señales</button>
     </div>
   </div>
+</div></div></section>
 
-  <div class="reveal" id="reveal" hidden>
-    <p class="poster">“Si de verdad me quisieras…”</p>
-    <p class="aside">Una frase que se oye en cualquier pasillo. Suena a cariño y funciona como chantaje.</p>
-    <p class="verdict">Los ocho mensajes de Dani son violencia psicológica.</p>
-    <p>Ninguno trae un golpe, y por eso pasan como celos o cariño. Hay control del teléfono, vigilancia de la ubicación, culpa, aislamiento de los amigos, silencio como castigo y una disculpa que vuelve a empezar todo. Si alguno te pareció normal, sigue bajando.</p>
-  </div>
-</section>
-
-<section class="chap band alt" data-label="1 de 8: Agresividad y violencia">
-  <div class="chap-head"><span class="chap-num">Capítulo 1 de 8</span><h2>Agresividad y violencia</h2></div>
-  <p>Solemos usarlas como sinónimos, pero la psicología las separa. Y esa diferencia es la que hace que la violencia se pueda prevenir.</p>
-  <div class="split">
-    <div><span class="term">Agresividad</span>
-      <p>Una respuesta biológica ante una amenaza. Todos la tenemos y sirve para defendernos.</p>
+<section id="agresividad"><div class="wrap">
+  <div class="head"><p class="label">Capítulo 1 de 8</p><h2>Agresividad y violencia</h2>
+    <p>Solemos usarlas como sinónimos, pero la psicología las separa. Esa diferencia es la que hace que la violencia se pueda prevenir.</p></div>
+  <div class="grid">
+    <div class="c-l6 stack"><span class="term">Agresividad</span>
+      <p class="def">Una respuesta biológica ante una amenaza. Todos la tenemos y sirve para defendernos.</p>
       <ul><li>Viene de fábrica</li><li>Aparece ante un peligro y se pasa</li></ul></div>
-    <div><span class="term bad">Violencia</span>
-      <p>Una conducta aprendida que usa la fuerza o el poder para dañar o dominar a otra persona. La OMS la define como el uso intencional de la fuerza o el poder contra otro, que causa o puede causar daño físico o psicológico.</p>
+    <div class="c-r6 stack"><span class="term bad">Violencia</span>
+      <p class="def">Una conducta aprendida que usa la fuerza o el poder para dañar o dominar a otra persona.</p>
+      <p>La OMS la define como el uso intencional de la fuerza o el poder contra otro, que causa o puede causar daño físico o psicológico.</p>
       <ul><li>Se aprende en casa, en el grupo y en lo que vemos</li><li>Busca controlar</li><li>Se puede desaprender</li></ul></div>
+    <div class="c-12 card"><span class="label">Piénsalo</span><p class="def">Si la violencia se aprende, ¿dónde aprendimos que revisarle el teléfono a alguien es una forma de cuidarlo?</p></div>
   </div>
-  <p class="think"><b>Piénsalo</b>Si la violencia se aprende, ¿dónde aprendimos que revisarle el teléfono a alguien es una forma de cuidarlo?</p>
-</section>
+</div></section>
 
-<section class="chap band" data-label="2 de 8: El triángulo de Galtung">
-  <div class="chap-head"><span class="chap-num">Capítulo 2 de 8</span><h2>Lo que se ve y lo que la sostiene</h2></div>
-  <p>Johan Galtung (1930-2024), sociólogo noruego y pionero de los estudios de paz, dibujó la violencia como un triángulo. Arriba está la que se ve. Abajo, dos formas que casi nunca notamos y que la mantienen viva. Toca cada punta.</p>
-  <div class="diagram">
-    <svg viewBox="0 0 330 300" role="group" aria-label="Triángulo de la violencia de Galtung">
-      <rect class="below" x="0" y="118" width="330" height="182" rx="14"/>
-      <line class="water" x1="6" y1="118" x2="324" y2="118"/>
-      <text class="water-lbl" x="322" y="110" text-anchor="end">se ve</text>
-      <text class="water-lbl" x="322" y="136" text-anchor="end">no se ve</text>
-      <polygon class="tri-edge" points="165,52 55,248 275,248"/>
-      <g class="vx on" data-k="directa" tabindex="0" role="button" aria-label="Violencia directa"><circle cx="165" cy="52" r="36"/><text x="165" y="57" text-anchor="middle">Directa</text></g>
-      <g class="vx" data-k="estructural" tabindex="0" role="button" aria-label="Violencia estructural"><circle cx="55" cy="248" r="42"/><text x="55" y="253" text-anchor="middle" font-size="13">Estructural</text></g>
-      <g class="vx" data-k="cultural" tabindex="0" role="button" aria-label="Violencia cultural"><circle cx="275" cy="248" r="42"/><text x="275" y="253" text-anchor="middle">Cultural</text></g>
-    </svg>
-    <div class="detail" id="triDetail" aria-live="polite"></div>
-  </div>
-  <p class="think"><b>Piénsalo</b>En el chat de Dani, ¿cuál era la parte directa? ¿Y qué idea cultural la hacía ver romántica?</p>
-</section>
-
-<section class="chap band alt" data-label="3 de 8: Formas de violencia">
-  <div class="chap-head"><span class="chap-num">Capítulo 3 de 8</span><h2>Las formas que toma</h2></div>
-  <p class="aside">La OMS divide la violencia en autoinfligida, interpersonal y colectiva. Aquí nos quedamos con la interpersonal, la que pasa entre parejas, amigos y compañeros.</p>
-  <div class="forms">
-    <div class="form-row"><b>Física</b><span>Empujones, apretones, golpes, encerrar a alguien.</span></div>
-    <div class="form-row"><b>Psicológica</b><span>Humillar, celar, culpar, amenazar, aplicar la ley del hielo. Es la más normalizada y casi siempre llega primero.</span></div>
-    <div class="form-row"><b>Digital</b><span>Pedir contraseñas, exigir la ubicación, revisar chats, publicar o amenazar con publicar fotos.</span></div>
-    <div class="form-row"><b>Sexual</b><span>Insistir hasta que el otro “acepte”, o tocar sin consentimiento.</span></div>
-    <div class="form-row"><b>Económica</b><span>Controlar el dinero del otro o hacerle sentir que debe algo porque le pagan las salidas.</span></div>
-  </div>
-</section>
-
-<section class="chap band" data-label="4 de 8: ¿Es violencia?">
-  <div class="chap-head"><span class="chap-num">Capítulo 4 de 8</span><h2>¿Es violencia o no?</h2></div>
-  <p>Diez situaciones que pasan en cualquier universidad. Contesta rápido, sin pensarlo mucho, y después lee por qué.</p>
-  <div class="game" id="game">
-    <div class="game-top"><span id="gCount">Caso 1 de 10</span><span class="pips" id="pips" aria-hidden="true"></span></div>
-    <div class="card" id="card"><span class="side l" id="sideL">No es</span><span class="side r" id="sideR">Sí es</span><p class="case" id="gCase"></p></div>
-    <p class="swipe-hint" id="hint">Desliza la tarjeta a la derecha si es violencia y a la izquierda si no. También puedes usar los botones.</p>
-    <div class="opts" id="gOpts"></div>
-    <div class="fb" id="gFb" hidden></div>
-    <button class="btn" id="gNext" type="button" hidden>Ver el siguiente caso</button>
-  </div>
-</section>
-
-<section class="chap band alt" data-label="5 de 8: El ciclo">
-  <div class="chap-head"><span class="chap-num">Capítulo 5 de 8</span><h2>¿Por qué no se va y ya?</h2></div>
-  <p>La psicóloga Lenore Walker entrevistó a más de cien mujeres para su libro de 1979 y encontró que la violencia en pareja se repite en un ciclo de tres fases. Mira qué pasa con el tiempo.</p>
-  <div class="seg" role="group" aria-label="Momento de la relación">
-    <button type="button" id="cycEarly" aria-pressed="true">Al principio</button>
-    <button type="button" id="cycLate" aria-pressed="false">Meses después</button>
-  </div>
-  <div class="cycle-wrap">
-    <svg viewBox="0 0 300 300" role="img" aria-label="Ciclo de la violencia: tensión, explosión y luna de miel">
-      <defs><marker id="ah" viewBox="0 0 10 10" refX="3" refY="5" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" orient="auto"><path class="arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
-      <path class="arc t" id="arcT" data-k="t"/>
-      <path class="arc e" id="arcE" data-k="e"/>
-      <path class="arc l" id="arcL" data-k="l"/>
-      <text class="cyc-center" x="150" y="148" text-anchor="middle" id="cycName">Luna de miel</text>
-      <text class="cyc-sub" x="150" y="170" text-anchor="middle" id="cycShare"></text>
-    </svg>
-    <div class="legend" id="legend">
-      <button type="button" data-k="t" aria-pressed="false"><i class="sw t"></i><span><b>Tensión</b><span>Reclamos, celos, silencios. La otra persona camina sobre cáscaras de huevo para no molestar.</span></span></button>
-      <button type="button" data-k="e" aria-pressed="false"><i class="sw e"></i><span><b>Explosión</b><span>Insultos, gritos, amenazas o agresión física. Es lo único que todos reconocen.</span></span></button>
-      <button type="button" data-k="l" aria-pressed="true"><i class="sw l"></i><span><b>Luna de miel</b><span>Perdón, regalos, “no va a volver a pasar”. Da esperanza y por eso amarra.</span></span></button>
+<section id="galtung"><div class="wrap">
+  <div class="head"><p class="label">Capítulo 2 de 8</p><h2>El triángulo de Galtung</h2>
+    <p>Johan Galtung (1930-2024), pionero de los estudios de paz, dibujó la violencia como un triángulo: arriba la que se ve, abajo dos formas que casi nunca notamos y que la mantienen viva.</p></div>
+  <div class="grid">
+    <div class="c-l5 stack">
+      <div class="picker" role="group" aria-label="Tipo de violencia">
+        <button class="chip" type="button" data-k="directa" aria-pressed="true">Directa</button>
+        <button class="chip" type="button" data-k="estructural" aria-pressed="false">Estructural</button>
+        <button class="chip" type="button" data-k="cultural" aria-pressed="false">Cultural</button>
+      </div>
+      <div class="detail" id="triDetail" aria-live="polite"></div>
+      <div class="card"><span class="label">Piénsalo</span><p>En el chat de Dani, ¿cuál era la parte directa? ¿Y qué idea cultural la hacía ver romántica?</p></div>
+    </div>
+    <div class="c-r6 visual">
+      <svg viewBox="0 0 330 300" role="group" aria-label="Triángulo de la violencia de Galtung">
+        <rect class="below" x="0" y="118" width="330" height="182" rx="14"/>
+        <line class="water" x1="6" y1="118" x2="324" y2="118"/>
+        <text class="water-lbl" x="322" y="110" text-anchor="end">se ve</text>
+        <text class="water-lbl" x="322" y="136" text-anchor="end">no se ve</text>
+        <polygon class="tri-edge" points="165,52 55,248 275,248"/>
+        <g class="vx on" data-k="directa" tabindex="0" role="button" aria-label="Violencia directa"><circle cx="165" cy="52" r="36"/><text x="165" y="57" text-anchor="middle">Directa</text></g>
+        <g class="vx" data-k="estructural" tabindex="0" role="button" aria-label="Violencia estructural"><circle cx="55" cy="248" r="42"/><text x="55" y="253" text-anchor="middle" font-size="13">Estructural</text></g>
+        <g class="vx" data-k="cultural" tabindex="0" role="button" aria-label="Violencia cultural"><circle cx="275" cy="248" r="42"/><text x="275" y="253" text-anchor="middle">Cultural</text></g>
+      </svg>
     </div>
   </div>
-  <p>Con los meses la luna de miel se acorta y la tensión ocupa casi todo. La psiquiatra Marie-France Hirigoyen describe cómo el maltrato psicológico va gastando la autoestima hasta que la persona duda de su propio criterio.</p>
-  <p class="think"><b>Piénsalo</b>¿Te acuerdas del último mensaje de Dani, “perdón amor, es que te amo demasiado”? Esa era la luna de miel.</p>
-</section>
+</div></section>
 
-<section class="chap band" data-label="6 de 8: Causas y consecuencias">
-  <div class="chap-head"><span class="chap-num">Capítulo 6 de 8</span><h2>De dónde viene y qué deja</h2></div>
-  <p>La OMS usa un modelo ecológico: la violencia sale de varios factores que se suman, desde la persona hasta la sociedad entera. Toca cada círculo.</p>
-  <div class="eco">
-    <svg viewBox="0 0 300 300" role="group" aria-label="Modelo ecológico de la violencia">
-      <circle class="ring r0" data-k="0" cx="150" cy="150" r="146"/>
-      <circle class="ring r1" data-k="1" cx="150" cy="150" r="110"/>
-      <circle class="ring r2" data-k="2" cx="150" cy="150" r="74"/>
-      <circle class="ring r3 on" data-k="3" cx="150" cy="150" r="38"/>
-      <text class="ring-lbl" x="150" y="26" text-anchor="middle">Sociedad</text>
-      <text class="ring-lbl" x="150" y="62" text-anchor="middle">Comunidad</text>
-      <text class="ring-lbl" x="150" y="98" text-anchor="middle">Relaciones</text>
-      <text class="ring-lbl" x="150" y="155" text-anchor="middle">Persona</text>
-    </svg>
-    <div class="detail" id="ecoDetail" aria-live="polite"></div>
-  </div>
-  <h3>Lo que le pasa a quien la vive</h3>
-  <div class="conseq">
-    <span>Ansiedad</span><span>Baja autoestima</span><span>Se aleja de sus amigos</span><span>Le baja el rendimiento en la universidad</span><span>Depresión</span><span>Miedo y dependencia</span><span>Riesgo de que llegue a lo físico</span>
-  </div>
-</section>
+<section id="formas"><div class="wrap">
+  <div class="head"><p class="label">Capítulo 3 de 8</p><h2>Cinco formas de violencia</h2>
+    <p>La OMS la divide en autoinfligida, interpersonal y colectiva. Aquí nos quedamos con la interpersonal, la que pasa entre parejas, amigos y compañeros.</p></div>
+  <ul class="rows">
+    <li><b>Física</b><span>Empujones, apretones, golpes, encerrar a alguien.</span></li>
+    <li><b>Psicológica</b><span>Humillar, celar, culpar, amenazar, aplicar la ley del hielo. Es la más normalizada y casi siempre llega primero.</span></li>
+    <li><b>Digital</b><span>Pedir contraseñas, exigir la ubicación, revisar chats, publicar o amenazar con publicar fotos.</span></li>
+    <li><b>Sexual</b><span>Insistir hasta que el otro “acepte”, o tocar sin consentimiento.</span></li>
+    <li><b>Económica</b><span>Controlar el dinero del otro o hacerle sentir que debe algo porque le pagan las salidas.</span></li>
+  </ul>
+</div></section>
 
-<section class="chap band alt" data-label="7 de 8: Voces">
-  <div class="chap-head"><span class="chap-num">Capítulo 7 de 8</span><h2>Gente que ya nos dejó pistas</h2></div>
-  <p>Ninguno de ellos habló de noviazgos universitarios, pero lo que defendieron aplica aquí mismo.</p>
-  <div class="voices">
-    <div class="voice"><h3>Mahatma Gandhi</h3><span class="yrs">India, 1869-1948</span>
+<section id="juego"><div class="wrap">
+  <div class="head"><p class="label">Capítulo 4 de 8</p><h2>Diez casos: ¿es violencia o no?</h2>
+    <p>Situaciones que pasan en cualquier universidad. Contesta rápido, sin pensarlo mucho, y después lee por qué.</p></div>
+  <div class="grid">
+    <div class="c-l5 stack">
+      <p class="def">Desliza la tarjeta a la derecha si es violencia y a la izquierda si no lo es. También puedes usar los tres botones.</p>
+      <p>“Depende” es una respuesta válida: algunas conductas solo son violencia cuando se repiten para controlar a la otra persona.</p>
+      <div class="card"><span class="label">Al final</span><p>Verás cuántos acertaste y el porqué de cada caso, para comentarlo en clase.</p></div>
+    </div>
+    <div class="c-r6 game" id="game">
+      <div class="game-top"><span id="gCount">Caso 1 de 10</span><span class="pips" id="pips" aria-hidden="true"></span></div>
+      <div class="case-card" id="card"><span class="side l" id="sideL">No es</span><span class="side r" id="sideR">Sí es</span><p class="case" id="gCase"></p></div>
+      <p class="swipe-hint" id="hint">Desliza o usa los botones.</p>
+      <div class="opts" id="gOpts"></div>
+      <div class="fb" id="gFb" hidden></div>
+      <button class="btn" id="gNext" type="button" hidden>Ver el siguiente caso</button>
+    </div>
+  </div>
+</div></section>
+
+<section id="ciclo"><div class="wrap">
+  <div class="head"><p class="label">Capítulo 5 de 8</p><h2>El ciclo de la violencia</h2>
+    <p>La psicóloga Lenore Walker entrevistó a más de cien mujeres para su libro de 1979 y encontró que la violencia en pareja se repite en tres fases. Por eso no es tan fácil irse y ya.</p></div>
+  <div class="grid">
+    <div class="c-l5 stack">
+      <div class="picker" role="group" aria-label="Momento de la relación">
+        <button class="chip" type="button" id="cycEarly" aria-pressed="true">Al principio</button>
+        <button class="chip" type="button" id="cycLate" aria-pressed="false">Meses después</button>
+      </div>
+      <div class="legend" id="legend">
+        <button type="button" data-k="t" aria-pressed="false"><i class="sw t"></i><span><b>Tensión</b><span>Reclamos, celos, silencios. La otra persona camina sobre cáscaras de huevo.</span></span></button>
+        <button type="button" data-k="e" aria-pressed="false"><i class="sw e"></i><span><b>Explosión</b><span>Insultos, gritos, amenazas o agresión física. Es lo único que todos reconocen.</span></span></button>
+        <button type="button" data-k="l" aria-pressed="true"><i class="sw l"></i><span><b>Luna de miel</b><span>Perdón, regalos, “no va a volver a pasar”. Da esperanza y por eso amarra.</span></span></button>
+      </div>
+      <p>Con los meses la luna de miel se acorta y la tensión ocupa casi todo. La psiquiatra Marie-France Hirigoyen describe cómo ese maltrato gasta la autoestima. El último mensaje de Dani, “perdón amor, es que te amo demasiado”, era la luna de miel.</p>
+    </div>
+    <div class="c-r6 visual">
+      <svg viewBox="0 0 300 300" role="img" aria-label="Ciclo de la violencia: tensión, explosión y luna de miel">
+        <defs><marker id="ah" viewBox="0 0 10 10" refX="3" refY="5" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" orient="auto"><path class="arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+        <path class="arc t" id="arcT" data-k="t"/>
+        <path class="arc e" id="arcE" data-k="e"/>
+        <path class="arc l" id="arcL" data-k="l"/>
+        <text class="cyc-center" x="150" y="148" text-anchor="middle" id="cycName">Luna de miel</text>
+        <text class="cyc-sub" x="150" y="170" text-anchor="middle" id="cycShare"></text>
+      </svg>
+    </div>
+  </div>
+</div></section>
+
+<section id="causas"><div class="wrap">
+  <div class="head"><p class="label">Capítulo 6 de 8</p><h2>Causas y consecuencias</h2>
+    <p>La OMS usa un modelo ecológico: la violencia sale de varios factores que se suman, desde la persona hasta la sociedad entera.</p></div>
+  <div class="grid">
+    <div class="c-l5 stack">
+      <div class="picker" role="group" aria-label="Nivel del modelo ecológico">
+        <button class="chip" type="button" data-e="3" aria-pressed="true">Persona</button>
+        <button class="chip" type="button" data-e="2" aria-pressed="false">Relaciones</button>
+        <button class="chip" type="button" data-e="1" aria-pressed="false">Comunidad</button>
+        <button class="chip" type="button" data-e="0" aria-pressed="false">Sociedad</button>
+      </div>
+      <div class="detail" id="ecoDetail" aria-live="polite"></div>
+      <p class="label">Lo que le pasa a quien la vive</p>
+      <ul class="conseq">
+        <li>Ansiedad</li><li>Baja autoestima</li><li>Se aleja de sus amigos</li><li>Baja su rendimiento</li><li>Depresión</li><li>Miedo y dependencia</li><li>Riesgo de que llegue a lo físico</li>
+      </ul>
+    </div>
+    <div class="c-r6 visual">
+      <svg viewBox="0 0 300 300" role="group" aria-label="Modelo ecológico de la violencia">
+        <circle class="ring r0" data-k="0" cx="150" cy="150" r="146"/>
+        <circle class="ring r1" data-k="1" cx="150" cy="150" r="110"/>
+        <circle class="ring r2" data-k="2" cx="150" cy="150" r="74"/>
+        <circle class="ring r3 on" data-k="3" cx="150" cy="150" r="38"/>
+        <text class="ring-lbl" x="150" y="26" text-anchor="middle">Sociedad</text>
+        <text class="ring-lbl" x="150" y="62" text-anchor="middle">Comunidad</text>
+        <text class="ring-lbl" x="150" y="98" text-anchor="middle">Relaciones</text>
+        <text class="ring-lbl" x="150" y="155" text-anchor="middle">Persona</text>
+      </svg>
+    </div>
+  </div>
+</div></section>
+
+<section id="voces"><div class="wrap">
+  <div class="head"><p class="label">Capítulo 7 de 8</p><h2>Seis voces por la paz</h2>
+    <p>Ninguno habló de noviazgos universitarios, pero lo que defendieron aplica aquí mismo.</p></div>
+  <div class="grid two-up">
+    <div class="c-4 card voice"><h3>Mahatma Gandhi</h3><span class="yrs">India, 1869-1948</span>
       <p>Defendió la <i>ahimsa</i>: no hacer daño con acciones, palabras ni pensamientos.</p>
       <p class="here">Si las palabras hacen daño, un “si me quisieras no irías” también cuenta.</p></div>
-    <div class="voice"><h3>Martin Luther King Jr.</h3><span class="yrs">Estados Unidos, 1929-1968. Nobel de la Paz 1964</span>
+    <div class="c-4 card voice"><h3>Martin Luther King Jr.</h3><span class="yrs">Estados Unidos, 1929-1968 · Nobel 1964</span>
       <p>Escribió que el silencio de la gente buena también sostiene la injusticia.</p>
-      <p class="here">Cuando un amigo controla a su pareja y nos reímos, ya estamos participando.</p></div>
-    <div class="voice"><h3>Johan Galtung</h3><span class="yrs">Noruega, 1930-2024</span>
-      <p>Separó la paz negativa (que no haya golpes) de la paz positiva (que haya justicia y respeto).</p>
+      <p class="here">Cuando un amigo controla a su pareja y nos reímos, ya participamos.</p></div>
+    <div class="c-4 card voice"><h3>Johan Galtung</h3><span class="yrs">Noruega, 1930-2024</span>
+      <p>Separó la paz negativa, que no haya golpes, de la paz positiva, que haya justicia y respeto.</p>
       <p class="here">Una relación sin gritos pero con miedo sigue sin estar en paz.</p></div>
-    <div class="voice"><h3>Malala Yousafzai</h3><span class="yrs">Pakistán, 1997. Nobel de la Paz 2014</span>
-      <p>Sobrevivió a un ataque por defender que las niñas estudien y siguió luchando por la educación de otras.</p>
+    <div class="c-4 card voice"><h3>Malala Yousafzai</h3><span class="yrs">Pakistán, 1997 · Nobel 2014</span>
+      <p>Sobrevivió a un ataque por defender que las niñas estudien y siguió luchando por la educación.</p>
       <p class="here">Educar es la forma de cortar una violencia que se aprendió.</p></div>
-    <div class="voice"><h3>Nelson Mandela</h3><span class="yrs">Sudáfrica, 1918-2013. Nobel de la Paz 1993</span>
+    <div class="c-4 card voice"><h3>Nelson Mandela</h3><span class="yrs">Sudáfrica, 1918-2013 · Nobel 1993</span>
       <p>Sostuvo que nadie nace odiando: el odio se aprende, y por eso también se puede enseñar a amar.</p>
-      <p class="here">Lo mismo del capítulo 1. Si se aprende, se desaprende.</p></div>
-    <div class="voice"><h3>Rafael Bisquerra</h3><span class="yrs">España, educación emocional</span>
+      <p class="here">Lo mismo del capítulo 1: si se aprende, se desaprende.</p></div>
+    <div class="c-4 card voice"><h3>Rafael Bisquerra</h3><span class="yrs">España, educación emocional</span>
       <p>Propone enseñar a reconocer y regular las emociones para resolver conflictos sin violencia.</p>
       <p class="here">Sentir celos es humano. Lo que importa es qué haces con ellos.</p></div>
   </div>
-</section>
+</div></section>
 
-<section class="chap hope band" data-label="8 de 8: Prevenir y actuar">
-  <div class="chap-head"><span class="chap-num">Capítulo 8 de 8</span><h2>Qué hacer</h2></div>
-  <p class="hope-intro">Ya viste las señales. Ahora, lo que sí puedes hacer.</p>
-  <div class="two">
-    <div><h3>Si te pasa a ti</h3><ul>
+<section id="ayuda" class="hope"><div class="wrap">
+  <div class="head"><p class="label">Capítulo 8 de 8</p><h2>Qué hacer si pasa</h2>
+    <p class="hope-intro">Ya viste las señales. Ahora, lo que sí puedes hacer.</p></div>
+  <div class="grid">
+    <div class="c-l6 stack do"><h3>Si te pasa a ti</h3><ul>
       <li>Ponle nombre: “lo que me está pasando es control”.</li>
       <li>Cuéntaselo a alguien de confianza.</li>
       <li>Busca el servicio de orientación psicológica de la universidad.</li>
       <li>Guarda capturas si hay amenazas.</li></ul></div>
-    <div><h3>Si le pasa a un amigo</h3><ul>
+    <div class="c-r6 stack do"><h3>Si le pasa a un amigo</h3><ul>
       <li>Escucha sin juzgar y sin decirle “déjalo ya”.</li>
       <li>No te alejes aunque vuelva con esa persona.</li>
       <li>Recuérdale lo que vale fuera de la relación.</li>
       <li>Si hay peligro físico, busca ayuda de inmediato.</li></ul></div>
   </div>
-  <p class="aside">En Venezuela, la Ley Orgánica sobre el Derecho de las Mujeres a una Vida Libre de Violencia castiga la violencia psicológica y el acoso contra la mujer como delitos, además de la física.</p>
-</section>
+  <p class="law">En Venezuela, la Ley Orgánica sobre el Derecho de las Mujeres a una Vida Libre de Violencia castiga la violencia psicológica y el acoso contra la mujer como delitos, además de la física.</p>
+</div></section>
 
-<section class="chap hope band alt" data-label="Para cerrar">
-  <div class="chap-head"><span class="chap-num">Para cerrar</span><h2>Tu semáforo</h2></div>
-  <p>Esto queda solo en tu teléfono. Marca lo que te haya pasado en alguna relación, de pareja o de amistad, en el último año.</p>
-  <div class="check">
-    <label><input type="checkbox" id="q1"> Me han pedido la ubicación o las contraseñas como prueba de confianza.</label>
-    <label><input type="checkbox" id="q2"> He dejado de ver a mis amigos para evitar una pelea.</label>
-    <label><input type="checkbox" id="q3"> Me han dejado de hablar para castigarme.</label>
-    <label><input type="checkbox" id="q4"> Siento que todo lo malo de la relación es culpa mía.</label>
-    <label><input type="checkbox" id="q5"> Me ha dado miedo cómo va a reaccionar la otra persona.</label>
+<section id="semaforo" class="hope"><div class="wrap">
+  <div class="head"><p class="label">Para cerrar</p><h2>Tu semáforo</h2>
+    <p>Esto queda solo en tu teléfono. Marca lo que te haya pasado en alguna relación, de pareja o de amistad, en el último año.</p></div>
+  <div class="grid">
+    <div class="c-l6 stack">
+      <div class="check">
+        <label><input type="checkbox" id="q1"> Me han pedido la ubicación o las contraseñas como prueba de confianza.</label>
+        <label><input type="checkbox" id="q2"> He dejado de ver a mis amigos para evitar una pelea.</label>
+        <label><input type="checkbox" id="q3"> Me han dejado de hablar para castigarme.</label>
+        <label><input type="checkbox" id="q4"> Siento que todo lo malo de la relación es culpa mía.</label>
+        <label><input type="checkbox" id="q5"> Me ha dado miedo cómo va a reaccionar la otra persona.</label>
+      </div>
+      <div class="card light g" id="light" aria-live="polite"><span class="lamp" aria-hidden="true"><i></i><i></i><i></i></span><p id="lightTxt"></p></div>
+    </div>
+    <div class="c-r6 stack">
+      <h3>Escoge un compromiso</h3>
+      <div class="pledges">
+        <button class="pledge" type="button" aria-pressed="false">No voy a revisarle el teléfono a nadie, aunque tenga dudas.</button>
+        <button class="pledge" type="button" aria-pressed="false">Cuando alguien diga que los celos son amor, lo voy a discutir.</button>
+        <button class="pledge" type="button" aria-pressed="false">Le voy a preguntar a un amigo cómo está de verdad en su relación.</button>
+        <button class="pledge" type="button" aria-pressed="false">Voy a decir lo que siento en vez de castigar con silencio.</button>
+      </div>
+    </div>
   </div>
-  <div class="light g" id="light" aria-live="polite"><span class="lamp" aria-hidden="true"><i></i><i></i><i></i></span><p id="lightTxt"></p></div>
+</div></section>
 
-  <h3>Escoge un compromiso</h3>
-  <div class="pledges">
-    <button class="pledge" type="button" aria-pressed="false">No voy a revisarle el teléfono a nadie, aunque tenga dudas.</button>
-    <button class="pledge" type="button" aria-pressed="false">Cuando alguien diga que los celos son amor, lo voy a discutir.</button>
-    <button class="pledge" type="button" aria-pressed="false">Le voy a preguntar a un amigo cómo está de verdad en su relación.</button>
-    <button class="pledge" type="button" aria-pressed="false">Voy a decir lo que siento en vez de castigar con silencio.</button>
-  </div>
-
-  <div class="share">
-    <h3>Pásaselo a tres personas</h3>
-    <p class="small">La violencia se aprende en grupo y se desaprende igual. Copia el mensaje y mándalo al grupo de tu carrera.</p>
-    <textarea id="shareTxt" aria-label="Mensaje para compartir">Mira esto, son 10 minutos. Es un chat y un juego sobre violencia en las relaciones y me sorprendió cuántas cosas que vemos normales son control. Dime cuántos casos acertaste: https://sam180107.github.io/recurso-violencia/</textarea>
-    <button class="btn" id="copyBtn" type="button">Copiar mensaje</button>
-  </div>
-</section>
-
-<footer>
-  <p>Hecho por Samir Nassar para Educación para la Paz, Universidad Metropolitana, noviembre de 2026.</p>
-  <p>El naranja de la parte final viene de la campaña Únete de ONU Mujeres, que lo usa como color de esperanza en un futuro sin violencia contra las mujeres.</p>
-  <p class="label">Fuentes</p>
-  <ul>
-    <li>Galtung, J. (1969). Violence, peace, and peace research. Journal of Peace Research, 6(3).</li>
-    <li>Galtung, J. (1990). Cultural violence. Journal of Peace Research, 27(3).</li>
-    <li>Walker, L. (1979). The battered woman. Harper &amp; Row.</li>
-    <li>Hirigoyen, M.-F. (1999). El acoso moral. Paidós.</li>
-    <li>OMS (2002). Informe mundial sobre la violencia y la salud.</li>
-    <li>Bisquerra, R. (2003). Educación emocional y competencias básicas para la vida. Revista de Investigación Educativa, 21(1).</li>
-    <li>Machado, C. (dir.). Es violencia; No me dejes así [cortometrajes]. Sibila Films.</li>
-    <li>Ley Orgánica sobre el Derecho de las Mujeres a una Vida Libre de Violencia (2007, reformada en 2021).</li>
-    <li>ONU Mujeres. Campaña Únete: Pinta el mundo de naranja.</li>
-  </ul>
-</footer>
 </main>
+
+<footer class="closing" id="compartir"><div class="wrap">
+  <div class="grid close">
+    <div class="c-l5 stack"><h2>Pásaselo a tres personas</h2>
+      <p class="lead">La violencia se aprende en grupo y se desaprende igual. Copia el mensaje y mándalo al grupo de tu carrera.</p></div>
+    <div class="c-r6 stack share">
+      <textarea id="shareTxt" aria-label="Mensaje para compartir">Mira esto, son 10 minutos. Es un chat y un juego sobre violencia en las relaciones y me sorprendió cuántas cosas que vemos normales son control. Dime cuántos casos acertaste: https://sam180107.github.io/recurso-violencia/</textarea>
+      <div class="btn-row"><button class="btn" id="copyBtn" type="button">Copiar el mensaje</button></div>
+    </div>
+  </div>
+  <div class="grid directory">
+    <div class="c-l5"><h3>Sobre este recurso</h3>
+      <p>Hecho por Samir Nassar para Educación para la Paz, Universidad Metropolitana, noviembre de 2026. El naranja del final viene de la campaña Únete de ONU Mujeres, que lo usa como color de esperanza en un futuro sin violencia contra las mujeres.</p></div>
+    <div class="c-r6"><h3>Fuentes</h3><ul>
+      <li>Galtung, J. (1969). Violence, peace, and peace research. Journal of Peace Research, 6(3).</li>
+      <li>Galtung, J. (1990). Cultural violence. Journal of Peace Research, 27(3).</li>
+      <li>Walker, L. (1979). The battered woman. Harper &amp; Row.</li>
+      <li>Hirigoyen, M.-F. (1999). El acoso moral. Paidós.</li>
+      <li>OMS (2002). Informe mundial sobre la violencia y la salud.</li>
+      <li>Bisquerra, R. (2003). Educación emocional y competencias básicas para la vida. Revista de Investigación Educativa, 21(1).</li>
+      <li>Machado, C. (dir.). Es violencia; No me dejes así [cortometrajes]. Sibila Films.</li>
+      <li>Ley Orgánica sobre el Derecho de las Mujeres a una Vida Libre de Violencia (2007, reformada en 2021).</li>
+      <li>ONU Mujeres. Campaña Únete: Pinta el mundo de naranja.</li></ul></div>
+    <p class="legal"><span>¿Esto es amor? · Educación para la Paz, UNIMET · 2026</span><a class="link" href="#chat">Volver al chat</a></p>
+  </div>
+</div></footer>
 
 <script>
 (function(){
@@ -579,7 +625,7 @@ body,.on-red{
     {t:"stamp",x:"Sábado, 1:15 a. m."},
     {t:"them",x:"Perdón amor, es que te amo demasiado y me da miedo perderte ❤️",h:"te amo demasiado",n:"Luna de miel del ciclo"}
   ];
-  var chat=document.getElementById('chat'), i=0, busy=false;
+  var chat=document.getElementById('chat-log'), i=0, busy=false;
   var nb=document.getElementById('nextMsg'), mb=document.getElementById('markBtn'), status=document.getElementById('status');
 
   function node(m, marked, anim){
@@ -594,21 +640,22 @@ body,.on-red{
     } else d.textContent=m.x;
     return d;
   }
+  chat.appendChild(node(msgs[0],false,false)); i=1;
   function done(){ if(i>=msgs.length){nb.hidden=true;mb.hidden=false} }
+  function toEnd(){chat.scrollTop=chat.scrollHeight}
   nb.addEventListener('click',function(){
     if(busy||i>=msgs.length) return;
     var m=msgs[i];
     if(m.t==="them" && !reduce){
       busy=true; status.textContent='escribiendo…';
-      var dots=document.createElement('div');dots.className='typing-dots';dots.innerHTML='<i></i><i></i><i></i>';chat.appendChild(dots);
-      setTimeout(function(){dots.remove();chat.appendChild(node(m,false,true));status.textContent='en línea';i++;busy=false;done()},420);
-    } else { chat.appendChild(node(m,false,true)); i++; done(); }
+      setTimeout(function(){chat.appendChild(node(m,false,true));toEnd();status.textContent='en línea';i++;busy=false;done()},420);
+    } else { chat.appendChild(node(m,false,true)); toEnd(); i++; done(); }
   });
   mb.addEventListener('click',function(){
     chat.innerHTML='';
     var s=document.createElement('span');s.className='stamp';s.textContent='Viernes, 7:42 p. m.';chat.appendChild(s);
     msgs.forEach(function(m){chat.appendChild(node(m,true,false))});
-    mb.hidden=true; document.getElementById('reveal').hidden=false;
+    mb.hidden=true; chat.scrollTop=0; document.getElementById('intro').hidden=true; var rv=document.getElementById('reveal'); rv.hidden=false; rv.classList.add('reveal-in');
     editTitle();
   });
 
@@ -638,6 +685,7 @@ body,.on-red{
   var triD=document.getElementById('triDetail'), vxs=document.querySelectorAll('.vx');
   function showTri(k){
     vxs.forEach(function(v){v.classList.toggle('on',v.dataset.k===k)});
+    document.querySelectorAll('#galtung .chip').forEach(function(c){c.setAttribute('aria-pressed',c.dataset.k===k?'true':'false')});
     var d=tri[k]; triD.innerHTML='';
     var h=document.createElement('h3');h.textContent=d.h;
     var p=document.createElement('p');p.textContent=d.p;
@@ -648,6 +696,7 @@ body,.on-red{
     v.addEventListener('click',function(){showTri(v.dataset.k)});
     v.addEventListener('keydown',function(ev){if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();showTri(v.dataset.k)}});
   });
+  document.querySelectorAll('#galtung .chip').forEach(function(c){c.addEventListener('click',function(){showTri(c.dataset.k)})});
   showTri('directa');
 
   /* ---------- JUEGO ---------- */
@@ -684,7 +733,7 @@ body,.on-red{
     var k=cases[gi]; gCase.textContent=k.c; gOpts.innerHTML=''; gFb.hidden=true; gNext.hidden=true;
     document.getElementById('gCount').textContent='Caso '+(gi+1)+' de '+cases.length;
     [1,2,0].forEach(function(idx){var b=document.createElement('button');b.type='button';b.className='opt';b.dataset.i=idx;b.textContent=labels[idx];b.onclick=function(){answer(idx)};gOpts.appendChild(b)});
-    card.className='card'; card.style.transform=''; locked=false; card.hidden=false; hint.hidden=false;
+    card.className='case-card'; card.style.transform=''; locked=false; card.hidden=false; hint.hidden=false;
     drawPips();
   }
   function answer(idx){
@@ -702,15 +751,15 @@ body,.on-red{
   gNext.addEventListener('click',function(){
     if(gi<cases.length-1){gi++;renderCase();return}
     document.getElementById('gCount').textContent='Resultado';
-    gCase.textContent='Acertaste '+score+' de '+cases.length+'.';
-    card.className='card'; locked=true; hint.hidden=true;
+    gCase.innerHTML='';var sc=document.createElement('span');sc.className='score';sc.textContent=score+' de '+cases.length;gCase.append(sc,document.createElement('br'),document.createTextNode('casos acertados'));
+    card.className='case-card'; locked=true; hint.hidden=true;
     gOpts.innerHTML=''; gNext.hidden=true; gFb.innerHTML='';
     var p=document.createElement('p');
     p.textContent=score>=8?'Tienes el ojo entrenado. El reto ahora es decirlo en voz alta cuando lo veas.':'Muchas de estas cosas están tan normalizadas que cuesta verlas. Por eso hay que hablarlas.';
     var ul=document.createElement('ul');ul.className='review';
     cases.forEach(function(k,j){var li=document.createElement('li');var m=document.createElement('span');m.className='mk '+(res[j]?'r':'w');m.textContent=res[j]?'✓':'✗';var s=document.createElement('span');s.textContent=k.tag+': '+labels[k.a].toLowerCase()+'.';li.append(m,s);ul.appendChild(li)});
-    var again=document.createElement('button');again.type='button';again.className='btn line';again.textContent='Jugar otra vez';again.style.alignSelf='flex-start';
-    again.onclick=function(){gi=0;score=0;res=[];renderCase();card.scrollIntoView({block:'center'})};
+    var again=document.createElement('button');again.type='button';again.className='btn btn--secondary';again.textContent='Jugar otra vez';again.style.alignSelf='flex-start';
+    again.onclick=function(){gi=0;score=0;res=[];renderCase();document.getElementById('juego').scrollIntoView()};
     gFb.append(p,ul,again); gFb.hidden=false;
   });
   renderCase();
@@ -757,9 +806,11 @@ body,.on-red{
   var ecoD=document.getElementById('ecoDetail'), rings=document.querySelectorAll('.ring');
   function showEco(k){
     rings.forEach(function(r){r.classList.toggle('on',+r.dataset.k===k)});
+    document.querySelectorAll('#causas .chip').forEach(function(c){c.setAttribute('aria-pressed',+c.dataset.e===k?'true':'false')});
     ecoD.innerHTML='';var h=document.createElement('h3');h.textContent=eco[k].h;var p=document.createElement('p');p.textContent=eco[k].p;ecoD.append(h,p);
   }
   rings.forEach(function(r){r.addEventListener('click',function(){showEco(+r.dataset.k)})});
+  document.querySelectorAll('#causas .chip').forEach(function(c){c.addEventListener('click',function(){showEco(+c.dataset.e)})});
   showEco(3);
 
   /* ---------- SEMÁFORO ---------- */
@@ -767,7 +818,7 @@ body,.on-red{
   function upd(){
     var n=0;boxes.forEach(function(b){if(b.checked)n++});
     var fear=document.getElementById('q5').checked, red=n>=3||fear, yel=!red&&n>=1;
-    light.className='light '+(red?'r':yel?'y':'g');
+    light.className='card light '+(red?'r':yel?'y':'g');
     lt.innerHTML='';var b=document.createElement('b'),s=document.createElement('span');
     if(red){b.textContent='Rojo';s.textContent='Lo que marcaste son señales de una relación que te está haciendo daño. Habla con alguien de confianza o con orientación psicológica de la universidad.'}
     else if(yel){b.textContent='Amarillo';s.textContent='Hay cosas que vale la pena conversar, con la otra persona y con alguien de confianza.'}
@@ -782,11 +833,20 @@ body,.on-red{
   })});
   var cb=document.getElementById('copyBtn'), ta=document.getElementById('shareTxt');
   cb.addEventListener('click',function(){
-    function ok(){cb.textContent='Copiado';setTimeout(function(){cb.textContent='Copiar mensaje'},1800)}
+    function ok(){cb.textContent='Copiado';setTimeout(function(){cb.textContent='Copiar el mensaje'},1800)}
     function fail(){ta.select();cb.textContent='Ya está seleccionado, cópialo'}
     try{navigator.clipboard.writeText(ta.value).then(ok,fail)}catch(e){fail()}
   });
 
+  /* ---------- MENÚ (teléfono y tableta) ---------- */
+  var mBtn=document.getElementById('menuBtn'), sheet=document.getElementById('sheet');
+  function closeMenu(){sheet.classList.remove('open');mBtn.setAttribute('aria-expanded','false');setTimeout(function(){sheet.hidden=true},reduce?0:200)}
+  mBtn.addEventListener('click',function(){
+    if(!sheet.hidden){closeMenu();return}
+    sheet.hidden=false;requestAnimationFrame(function(){sheet.classList.add('open')});mBtn.setAttribute('aria-expanded','true');
+  });
+  sheet.addEventListener('click',closeMenu);
+  addEventListener('keydown',function(e){if(e.key==='Escape'&&!sheet.hidden)closeMenu()});
 })();
 </script>
 </body>
